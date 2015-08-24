@@ -11,7 +11,7 @@ export default class Nav extends React.Component {
         return (
             <div className={bemBlock}>
                 {
-                    this.props.path ?
+                    this.props.path && this.props.path.length ?
                         <div className={className(bemBlock, 'path')}>
                         {
                             this.props.path.map((item, index) => (
@@ -25,11 +25,22 @@ export default class Nav extends React.Component {
                         null
                 }
                 <div className={className(bemBlock, 'header')}>{this.props.title}</div>
-                {
-                    this.props.children
-                }
             </div>
         )
+    }
+
+    componentDidMount() {
+        this.updateTitle();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.title != this.props.title) {
+            this.updateTitle();
+        }
+    }
+
+    updateTitle() {
+        document.title = this.props.title;
     }
 
 }

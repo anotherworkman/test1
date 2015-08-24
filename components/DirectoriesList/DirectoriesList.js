@@ -10,10 +10,10 @@ export default class DirectoriesList extends React.Component {
         return (
             <div className={bemBlock}>
                 {
-                    this.props.directories.map(dir =>
-                            <div className={className(bemBlock, 'item')}>
-                                <a href={'#' + dir.id} className="link">{dir.name}</a>
-                            </div>
+                    this.props.data.directories.map(dir =>
+                        <div key={dir.id} className={className(bemBlock, 'item')}>
+                            <a href={'#/' + dir.id} className="link">{dir.name}</a>
+                        </div>
                     )
                 }
             </div>
