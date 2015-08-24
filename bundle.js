@@ -20907,7 +20907,7 @@
 
 	__webpack_require__(186);
 
-	var bemBlock = 'dir';
+	var bemBlock = 'directories-list';
 
 	var DirectoriesList = (function (_React$Component) {
 	    _inherits(DirectoriesList, _React$Component);
@@ -21253,7 +21253,7 @@
 
 
 	// module
-	exports.push([module.id, ".dir {\n  font-size: 13px;\n  margin-top: 22px;\n}\n.dir__item {\n  margin-top: 10px;\n}\n", ""]);
+	exports.push([module.id, ".directories-list {\n  font-size: 13px;\n  margin-top: 22px;\n}\n.directories-list__item {\n  margin-top: 10px;\n}\n", ""]);
 
 	// exports
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {className} from '../BemHelper';
 
 import "./DirectoriesList.less";
-const bemBlock = 'dir';
+const bemBlock = 'directories-list';
 
 export default class DirectoriesList extends React.Component {
 
