@@ -1,0 +1,43 @@
+.entries-table {
+    @header-offset: 28px;
+    padding-top: @header-offset + 15px;
+
+    &__table {
+        border-collapse: collapse;
+        box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);
+        border-radius: 10px;
+        background: #FEFEFE;
+        color: #0B0B0B;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    &__cell {
+        padding: 15px 15px 14px 11px;
+        border-bottom: solid 1px #DCDCDC;
+        max-width: 184px;
+
+        &:first-child {
+            padding-left: 15px;
+        }
+
+        &:last-child {
+            padding-left: 28px;
+            padding-right: 60px;
+        }
+
+        &_header {
+            padding-top: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+    }
+
+    &__header {
+        margin-top: -@header-offset;
+    }
+
+    &__row:last-child > &__cell {
+        border-bottom: none;
+    }
+}
