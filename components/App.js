@@ -4,13 +4,16 @@ import Router, {Route, DefaultRoute, RouteHandler} from 'react-router';
 import Nav from './Nav/Nav';
 import DirectoriesList from './DirectoriesList/DirectoriesList';
 import DirectoryEntries from './DirectoryEntries/DirectoryEntries';
+import EntryForm from './EntryForm/EntryForm';
 
 import directories from '../json/getDirectories.json';
 import directory from '../json/getDirectory.json';
+import entry from '../json/getEntry.json';
 
 var data = {
     directories: directories.response,
-    directory: directory.response
+    directory: directory.response,
+    entry: entry.response
 };
 
 import './App.less';
@@ -21,14 +24,20 @@ class App extends React.Component {
     render() {
         var navPath = [];
         var navTitle = 'Справочники';
-        if (this.props.data.directory) {
-            navPath.push(navTitle);
-            navTitle = this.props.data.directory.name;
+        var data = this.props.data;
+        var directory = data.directory || (data.entry && data.entry.directory);
+        if (directory) {
+            navPath.push({title: navTitle, route: 'directories'});
+            navTitle = directory.name;
+            if (data.entry) {
+                navPath.push({title: navTitle, route: 'directory', params: {directoryId: directory.id} });
+                navTitle = data.entry.name;
+            }
         }
         return (
             <div>
                 <Nav path={navPath} title={navTitle}/>
-                <RouteHandler data={this.props.data}/>
+                <RouteHandler data={data}/>
             </div>
         )
     }
@@ -36,9 +45,10 @@ class App extends React.Component {
 }
 
 var routes = (
-    <Route handler={App}>
-        <Route name="directory" path=":directoryId" handler={DirectoryEntries}/>
+    <Route path="/" handler={App}>
         <DefaultRoute name="directories" handler={DirectoriesList}/>
+        <Route name="directory" path="directory:directoryId" handler={DirectoryEntries}/>
+        <Route name="entry" path="directory:directoryId/entry:entryId" handler={EntryForm}/>
     </Route>
 );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {className} from '../BemHelper';
 
 import "./EntriesTable.less";
@@ -6,6 +6,8 @@ const bemBlock = 'entries-table';
 
 
 export default class EntriesTable extends React.Component {
+
+    static contextTypes = { router: PropTypes.any };
 
     render() {
         return (
@@ -22,18 +24,21 @@ export default class EntriesTable extends React.Component {
                             ))
                         }
                         </tr>,
-                        this.props.entries.map(entry => (
-                            <tr key={entry[0]} className={className(bemBlock, 'row')}>
-                            {
-                                entry.slice(1).map((value, index) => {
-                                    if (index == 0) {
-                                        value = <a href={'#' + entry[0]} className="link">{value}</a>;
-                                    }
-                                    return <td key={index} className={className(bemBlock, 'cell')}>{value}</td>;
-                                })
-                            }
-                            </tr>
-                        ))
+                        this.props.entries.map(entry => {
+                            var entryId = entry[0];
+                            var values = entry.slice(1);
+                            var cells = values.map((value, index) => {
+                                if (index == 0) {
+                                    var href = this.context.router.makeHref('entry', {
+                                        directoryId: this.props.directoryId,
+                                        entryId: entryId
+                                    });
+                                    value = <a href={href} className="link">{value}</a>;
+                                }
+                                return <td key={index} className={className(bemBlock, 'cell')}>{value}</td>;
+                            });
+                            return <tr key={entryId} className={className(bemBlock, 'row')}>{cells}</tr>;
+                        })
                     ]}
                     </tbody>
                 </table>

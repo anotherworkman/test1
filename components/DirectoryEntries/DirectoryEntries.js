@@ -32,13 +32,15 @@ export default class DirectoryEntries extends React.Component {
     }
 
     render() {
+        var directory = this.props.data.directory;
         return (
             <div className={bemBlock}>
                 <div className="button">+ Создать новый</div>
                 <div className={className(bemBlock, 'entries-box')}>
                     <div className={className(bemBlock, 'entries-table-box')}>
                         <EntriesTable
-                            fields={this.props.data.directory.fields}
+                            directoryId={directory.id}
+                            fields={directory.fields}
                             entries={this.state.filteredEntries}
                         />
                     </div>

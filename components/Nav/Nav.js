@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {className} from '../BemHelper';
 
 import './Nav.less';
@@ -6,6 +6,8 @@ const bemBlock = 'nav';
 
 
 export default class Nav extends React.Component {
+
+    static contextTypes = { router: PropTypes.any };
 
     render() {
         return (
@@ -16,7 +18,12 @@ export default class Nav extends React.Component {
                         {
                             this.props.path.map((item, index) => (
                                 <div key={index} className={className(bemBlock, 'path-item')}>
-                                    <a href="#" className="link">{item}</a>
+                                    <a
+                                        href={this.context.router.makeHref(item.route, item.params)}
+                                        className="link"
+                                    >
+                                        {item.title}
+                                    </a>
                                 </div>
                             ))
                         }
