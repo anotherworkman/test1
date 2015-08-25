@@ -25,3 +25,36 @@ body {
     background: linear-gradient(to bottom, #9DF8B3, #75D68B);
     cursor: pointer;
 }
+
+
+.input {
+    margin: 0;
+    padding: 5px 0 6px 5px;
+    border: solid 1px #CECECE;
+    border-radius: 3px;
+    line-height: 13px; // в firefox по-умолчанию 14px
+
+    &[type="search"] {
+        width: 100%;
+        //todo нужно сделать кастомный ClearableInput, а не патчить хаками этот зоопарк
+        -webkit-appearance: textfield; // не searchfield т.к. иначе в safari высота поля дискретная,
+        // паддинги на нее не влияют
+
+        &::-webkit-search-decoration {
+            -webkit-appearance: none; // разные паддинги в chrome и safari
+        }
+        &::-webkit-search-cancel-button {
+            // margin срабатывает только в chorme,
+            // пользуемся этим, чтобы сделать одинаковым отступ у [x]
+            margin-right: 4px;
+            margin-bottom: -1px;
+        }
+
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #ACACAC;
+        background: #FBFAF4;
+    }
+}

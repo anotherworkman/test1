@@ -1,7 +1,7 @@
 import React from 'react';
 import {className} from '../BemHelper';
 
-import "./Nav.less";
+import './Nav.less';
 const bemBlock = 'nav';
 
 

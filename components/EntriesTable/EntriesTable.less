@@ -2,6 +2,20 @@
     @header-offset: 28px;
     padding-top: @header-offset + 15px;
 
+    &_empty {
+        &:after {
+            content: 'Записи не найдены';
+            display: block;
+            margin-top: 1px;
+            border-top: solid 1px #CECECE;
+            padding-top: 19px;
+            text-align: center;
+            font-size: 13px;
+            color: #bebebe;
+            text-shadow: 1px 1px #FFF;
+        }
+    }
+
     &__table {
         border-collapse: collapse;
         box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);
@@ -13,9 +27,10 @@
     }
 
     &__cell {
+        box-sizing: border-box;
         padding: 15px 15px 14px 11px;
         border-bottom: solid 1px #DCDCDC;
-        max-width: 184px;
+        max-width: 214px;
 
         &:first-child {
             padding-left: 15px;

@@ -5,15 +5,15 @@ import Nav from './Nav/Nav';
 import DirectoriesList from './DirectoriesList/DirectoriesList';
 import DirectoryEntries from './DirectoryEntries/DirectoryEntries';
 
-import directories from "../json/getDirectories.json";
-import directory from "../json/getDirectory.json";
+import directories from '../json/getDirectories.json';
+import directory from '../json/getDirectory.json';
 
 var data = {
     directories: directories.response,
     directory: directory.response
 };
 
-import "./App.less";
+import './App.less';
 
 
 class App extends React.Component {

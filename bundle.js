@@ -20832,7 +20832,7 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=PT+Sans:400&subset=latin,cyrillic);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #E9F3EE;\n  margin: 20px 20px;\n}\n.link {\n  color: #235FBE;\n  -webkit-text-decoration-color: #BCD7E4;\n  text-decoration-color: #BCD7E4;\n}\n.button {\n  display: inline-block;\n  font-size: 14px;\n  color: #0B0B0B;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 15px;\n  background-color: #8AE99F;\n  background: linear-gradient(to bottom, #9df8b3, #75d68b);\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #E9F3EE;\n  margin: 20px 20px;\n}\n.link {\n  color: #235FBE;\n  -webkit-text-decoration-color: #BCD7E4;\n  text-decoration-color: #BCD7E4;\n}\n.button {\n  display: inline-block;\n  font-size: 14px;\n  color: #0B0B0B;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 15px;\n  background-color: #8AE99F;\n  background: linear-gradient(to bottom, #9df8b3, #75d68b);\n  cursor: pointer;\n}\n.input {\n  margin: 0;\n  padding: 5px 0 6px 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  line-height: 13px;\n}\n.input[type=\"search\"] {\n  width: 100%;\n  -webkit-appearance: textfield;\n}\n.input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input[type=\"search\"]::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n", ""]);
 
 	// exports
 
@@ -21120,53 +21120,66 @@
 	    _createClass(EntriesTable, [{
 	        key: 'render',
 	        value: function render() {
-	            var directory = this.props.directory;
 	            return _react2['default'].createElement(
 	                'div',
-	                { className: bemBlock },
+	                { className: (0, _BemHelper.className)(bemBlock, { empty: !this.props.entries.length }) },
 	                _react2['default'].createElement(
 	                    'table',
 	                    { className: (0, _BemHelper.className)(bemBlock, 'table') },
-	                    [_react2['default'].createElement(
-	                        'tr',
-	                        { key: 'header', className: (0, _BemHelper.className)(bemBlock, 'row') },
-	                        directory.fields.map(function (field) {
-	                            return _react2['default'].createElement(
-	                                'td',
-	                                { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'cell', { header: true }) },
-	                                _react2['default'].createElement(
-	                                    'div',
-	                                    { className: (0, _BemHelper.className)(bemBlock, 'header') },
-	                                    field.name
-	                                )
-	                            );
-	                        })
-	                    ), directory.items.map(function (item) {
-	                        return _react2['default'].createElement(
+	                    _react2['default'].createElement(
+	                        'tbody',
+	                        null,
+	                        [_react2['default'].createElement(
 	                            'tr',
-	                            { key: item.id, className: (0, _BemHelper.className)(bemBlock, 'row') },
-	                            directory.fields.map(function (field) {
-	                                var value = item[field.id];
-	                                if (field.type == 'FLOAT') {
-	                                    value = value.toString().replace('.', ',');
-	                                }
-	                                if (field.id == 'name') {
-	                                    value = _react2['default'].createElement(
-	                                        'a',
-	                                        { href: '#' + item.id, className: 'link' },
-	                                        value
-	                                    );
-	                                }
+	                            { ref: 'header', key: 'header', className: (0, _BemHelper.className)(bemBlock, 'row') },
+	                            this.props.fields.map(function (field) {
 	                                return _react2['default'].createElement(
 	                                    'td',
-	                                    { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'cell') },
-	                                    value
+	                                    { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'cell', { header: true }) },
+	                                    _react2['default'].createElement(
+	                                        'div',
+	                                        { className: (0, _BemHelper.className)(bemBlock, 'header') },
+	                                        field.name
+	                                    )
 	                                );
 	                            })
-	                        );
-	                    })]
+	                        ), this.props.entries.map(function (entry) {
+	                            return _react2['default'].createElement(
+	                                'tr',
+	                                { key: entry[0], className: (0, _BemHelper.className)(bemBlock, 'row') },
+	                                entry.slice(1).map(function (value, index) {
+	                                    if (index == 0) {
+	                                        value = _react2['default'].createElement(
+	                                            'a',
+	                                            { href: '#' + entry[0], className: 'link' },
+	                                            value
+	                                        );
+	                                    }
+	                                    return _react2['default'].createElement(
+	                                        'td',
+	                                        { key: index, className: (0, _BemHelper.className)(bemBlock, 'cell') },
+	                                        value
+	                                    );
+	                                })
+	                            );
+	                        })]
+	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this = this;
+
+	            // чтобы при фильтрации не приыгала ширина колонок
+	            setTimeout(function () {
+	                var columns = _react2['default'].findDOMNode(_this.refs.header).childNodes;
+	                for (var i = 0; i < columns.length; i++) {
+	                    var col = columns[i];
+	                    col.style.width = window.getComputedStyle(col).width;
+	                }
+	            }, 100); // без timeout layout еще не успевает просчитаться
 	        }
 	    }]);
 
@@ -21211,7 +21224,7 @@
 
 
 	// module
-	exports.push([module.id, ".entries-table {\n  padding-top: 43px;\n}\n.entries-table__table {\n  border-collapse: collapse;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n  border-radius: 10px;\n  background: #FEFEFE;\n  color: #0B0B0B;\n  font-size: 13px;\n  line-height: 1.5;\n}\n.entries-table__cell {\n  padding: 15px 15px 14px 11px;\n  border-bottom: solid 1px #DCDCDC;\n  max-width: 184px;\n}\n.entries-table__cell:first-child {\n  padding-left: 15px;\n}\n.entries-table__cell:last-child {\n  padding-left: 28px;\n  padding-right: 60px;\n}\n.entries-table__cell_header {\n  padding-top: 0;\n  padding-bottom: 0;\n  border-bottom: none;\n}\n.entries-table__header {\n  margin-top: -28px;\n}\n.entries-table__row:last-child > .entries-table__cell {\n  border-bottom: none;\n}\n", ""]);
+	exports.push([module.id, ".entries-table {\n  padding-top: 43px;\n}\n.entries-table_empty:after {\n  content: '\\417\\430\\43F\\438\\441\\438   \\43D\\435   \\43D\\430\\439\\434\\435\\43D\\44B';\n  display: block;\n  margin-top: 1px;\n  border-top: solid 1px #CECECE;\n  padding-top: 19px;\n  text-align: center;\n  font-size: 13px;\n  color: #bebebe;\n  text-shadow: 1px 1px #FFF;\n}\n.entries-table__table {\n  border-collapse: collapse;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n  border-radius: 10px;\n  background: #FEFEFE;\n  color: #0B0B0B;\n  font-size: 13px;\n  line-height: 1.5;\n}\n.entries-table__cell {\n  box-sizing: border-box;\n  padding: 15px 15px 14px 11px;\n  border-bottom: solid 1px #DCDCDC;\n  max-width: 214px;\n}\n.entries-table__cell:first-child {\n  padding-left: 15px;\n}\n.entries-table__cell:last-child {\n  padding-left: 28px;\n  padding-right: 60px;\n}\n.entries-table__cell_header {\n  padding-top: 0;\n  padding-bottom: 0;\n  border-bottom: none;\n}\n.entries-table__header {\n  margin-top: -28px;\n}\n.entries-table__row:last-child > .entries-table__cell {\n  border-bottom: none;\n}\n", ""]);
 
 	// exports
 
@@ -24402,8 +24415,6 @@
 
 	var _EntriesTableEntriesTable2 = _interopRequireDefault(_EntriesTableEntriesTable);
 
-	//import ClearableInput from '../ClearableInput/ClearableInput';
-
 	var _BemHelper = __webpack_require__(168);
 
 	__webpack_require__(229);
@@ -24413,10 +24424,28 @@
 	var DirectoryEntries = (function (_React$Component) {
 	    _inherits(DirectoryEntries, _React$Component);
 
-	    function DirectoryEntries() {
+	    function DirectoryEntries(props) {
 	        _classCallCheck(this, DirectoryEntries);
 
-	        _get(Object.getPrototypeOf(DirectoryEntries.prototype), 'constructor', this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(DirectoryEntries.prototype), 'constructor', this).call(this);
+	        var directory = props.data.directory;
+	        var entries = directory.items.map(function (item) {
+	            var values = directory.fields.map(function (field) {
+	                var value = item[field.id].toString();
+	                if (field.type == 'FLOAT') {
+	                    value = value.replace('.', ',');
+	                }
+	                return value;
+	            });
+	            values.unshift(item.id);
+	            return values;
+	        });
+
+	        this.state = {
+	            entries: entries,
+	            searchText: '',
+	            filteredEntries: entries
+	        };
 	    }
 
 	    _createClass(DirectoryEntries, [{
@@ -24436,7 +24465,10 @@
 	                    _react2['default'].createElement(
 	                        'div',
 	                        { className: (0, _BemHelper.className)(bemBlock, 'entries-table-box') },
-	                        _react2['default'].createElement(_EntriesTableEntriesTable2['default'], { directory: this.props.data.directory })
+	                        _react2['default'].createElement(_EntriesTableEntriesTable2['default'], {
+	                            fields: this.props.data.directory.fields,
+	                            entries: this.state.filteredEntries
+	                        })
 	                    ),
 	                    _react2['default'].createElement(
 	                        'div',
@@ -24452,16 +24484,42 @@
 	                            _react2['default'].createElement(
 	                                'div',
 	                                { className: 'entries-filter__input-form' },
-	                                _react2['default'].createElement(
-	                                    'div',
-	                                    { className: 'entries-filter__input-box' },
-	                                    'Поиск'
-	                                )
+	                                _react2['default'].createElement('input', {
+	                                    className: 'input',
+	                                    type: 'search',
+	                                    placeholder: 'Поиск',
+	                                    value: this.state.searchText,
+	                                    onChange: this.handleFilterChange.bind(this)
+	                                })
 	                            )
 	                        )
 	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'handleFilterChange',
+	        value: function handleFilterChange(e) {
+	            var searchText = e.target.value;
+	            this.setState({
+	                searchText: searchText,
+	                filteredEntries: this.filterEntries(this.state.entries, searchText)
+	            });
+	        }
+	    }, {
+	        key: 'filterEntries',
+	        value: function filterEntries(entries, searchText) {
+	            if (!searchText) {
+	                return entries;
+	            }
+	            searchText = searchText.toLowerCase();
+	            return entries.filter(function (entry) {
+	                return entry.slice(1).some(function (val) {
+	                    return val && val.toLowerCase().split(' ').some(function (word) {
+	                        return word.indexOf(searchText) == 0;
+	                    });
+	                });
+	            });
 	        }
 	    }]);
 
@@ -24470,7 +24528,6 @@
 
 	exports['default'] = DirectoryEntries;
 	module.exports = exports['default'];
-	/*<ClearableInput value={'Поиск'} onChange=""/>*/
 
 /***/ },
 /* 229 */
@@ -24507,7 +24564,7 @@
 
 
 	// module
-	exports.push([module.id, ".directory-entries__entries-box {\n  white-space: nowrap;\n}\n.directory-entries__entries-table-box {\n  display: inline-block;\n  white-space: normal;\n}\n.directory-entries__entries-filter-box {\n  display: inline-block;\n  white-space: normal;\n  vertical-align: top;\n  padding-left: 25px;\n  padding-top: 15px;\n}\n.entries-filter__title {\n  font-size: 14px;\n  padding-left: 15px;\n  margin-bottom: 10px;\n}\n.entries-filter__input-form {\n  border: solid 1px #CECECE;\n  border-radius: 10px;\n  padding: 15px 15px 48px;\n}\n.entries-filter__input-box {\n  border: solid 1px #CECECE;\n  border-radius: 2px;\n  padding: 6px 5px;\n  width: 168px;\n  background: #FEFEFE;\n  color: #BFBFBF;\n  font-size: 11px;\n  font-family: Arial, sans-serif;\n}\n", ""]);
+	exports.push([module.id, ".directory-entries__entries-box {\n  white-space: nowrap;\n}\n.directory-entries__entries-table-box {\n  display: inline-block;\n  white-space: normal;\n}\n.directory-entries__entries-filter-box {\n  display: inline-block;\n  white-space: normal;\n  vertical-align: top;\n  padding-left: 30px;\n  padding-top: 15px;\n}\n.entries-filter__title {\n  font-size: 14px;\n  padding-left: 15px;\n  margin-bottom: 10px;\n}\n.entries-filter__input-form {\n  border: solid 1px #CECECE;\n  border-radius: 10px;\n  padding: 15px 15px 48px;\n  width: 180px;\n}\n", ""]);
 
 	// exports
 
