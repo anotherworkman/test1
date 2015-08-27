@@ -28,6 +28,7 @@ body {
 
 
 .input {
+    width: 100%;
     margin: 0;
     padding: 5px 0 6px 5px;
     border: solid 1px #CECECE;
@@ -35,7 +36,6 @@ body {
     line-height: 13px; // в firefox по-умолчанию 14px
 
     &[type="search"] {
-        width: 100%;
         //todo нужно сделать кастомный ClearableInput, а не патчить хаками этот зоопарк
         -webkit-appearance: textfield; // не searchfield т.к. иначе в safari высота поля дискретная,
         // паддинги на нее не влияют

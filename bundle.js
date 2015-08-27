@@ -24541,6 +24541,10 @@
 	    value: true
 	});
 
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -24553,23 +24557,75 @@
 
 	var _BemHelper = __webpack_require__(197);
 
-	//import './EntryForm.less';
+	var _FormField = __webpack_require__(254);
+
+	var FormField = _interopRequireWildcard(_FormField);
+
+	__webpack_require__(251);
+
 	var bemBlock = 'entry-form';
 
 	var EntryForm = (function (_React$Component) {
 	    _inherits(EntryForm, _React$Component);
 
-	    function EntryForm() {
+	    _createClass(EntryForm, null, [{
+	        key: 'childContextTypes',
+	        value: { changeHandler: _react.PropTypes.any },
+	        enumerable: true
+	    }]);
+
+	    function EntryForm(props) {
 	        _classCallCheck(this, EntryForm);
 
-	        _React$Component.apply(this, arguments);
+	        _React$Component.call(this);
+	        var values = {};props.data.entry.items.forEach(function (field) {
+	            return values[field.id] = field.type == 'SELECT' ? field.values.filter(function (val) {
+	                return val.selected;
+	            })[0].id : field.value;
+	        });
+	        this.state = { values: values };
 	    }
 
+	    EntryForm.prototype.getChildContext = function getChildContext() {
+	        return { changeHandler: this.handleChange.bind(this) };
+	    };
+
+	    EntryForm.prototype.handleChange = function handleChange(id, value) {
+	        this.state.values[id] = value;
+	        this.forceUpdate();
+	    };
+
 	    EntryForm.prototype.render = function render() {
+	        var _this = this;
+
+	        var fields = this.props.data.entry.items;
 	        return _react2['default'].createElement(
 	            'div',
-	            null,
-	            'todo'
+	            { className: bemBlock },
+	            _react2['default'].createElement(
+	                'table',
+	                { className: (0, _BemHelper.className)(bemBlock, 'table') },
+	                _react2['default'].createElement(
+	                    'tbody',
+	                    null,
+	                    fields.map(function (field) {
+	                        return _react2['default'].createElement(
+	                            'tr',
+	                            { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'field') },
+	                            _react2['default'].createElement(
+	                                'td',
+	                                { className: (0, _BemHelper.className)(bemBlock, 'field-label') },
+	                                field.name
+	                            ),
+	                            _react2['default'].createElement(
+	                                'td',
+	                                { className: (0, _BemHelper.className)(bemBlock, 'field-input') },
+	                                FormField.createElement(field, _this.state.values[field.id])
+	                            )
+	                        );
+	                    })
+	                )
+	            )
 	        );
 	    };
 
@@ -24846,10 +24902,282 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=PT+Sans:400&subset=latin,cyrillic);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #E9F3EE;\n  margin: 20px 20px;\n}\n.link {\n  color: #235FBE;\n  -webkit-text-decoration-color: #BCD7E4;\n  text-decoration-color: #BCD7E4;\n}\n.button {\n  display: inline-block;\n  font-size: 14px;\n  color: #0B0B0B;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 15px;\n  background-color: #8AE99F;\n  background: linear-gradient(to bottom, #9df8b3, #75d68b);\n  cursor: pointer;\n}\n.input {\n  margin: 0;\n  padding: 5px 0 6px 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  line-height: 13px;\n}\n.input[type=\"search\"] {\n  width: 100%;\n  -webkit-appearance: textfield;\n}\n.input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input[type=\"search\"]::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #E9F3EE;\n  margin: 20px 20px;\n}\n.link {\n  color: #235FBE;\n  -webkit-text-decoration-color: #BCD7E4;\n  text-decoration-color: #BCD7E4;\n}\n.button {\n  display: inline-block;\n  font-size: 14px;\n  color: #0B0B0B;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 15px;\n  background-color: #8AE99F;\n  background: linear-gradient(to bottom, #9df8b3, #75d68b);\n  cursor: pointer;\n}\n.input {\n  width: 100%;\n  margin: 0;\n  padding: 5px 0 6px 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  line-height: 13px;\n}\n.input[type=\"search\"] {\n  -webkit-appearance: textfield;\n}\n.input[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input[type=\"search\"]::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n", ""]);
 
 	// exports
 
+
+/***/ },
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(252);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(201)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./EntryForm.less", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./EntryForm.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(200)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".entry-form__table {\n  margin-top: -10px;\n  border-collapse: collapse;\n  font-size: 14px;\n}\n.entry-form__field-label {\n  padding: 0;\n  padding-top: 5px;\n  min-width: 160px;\n  vertical-align: top;\n}\n.entry-form__field-input {\n  padding: 0;\n  padding-bottom: 13px;\n  min-width: 233px;\n}\n.entry-form textarea {\n  min-height: 69px;\n  margin-bottom: -7px;\n}\n.entry-form select {\n  margin-top: 5px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 253 */,
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	exports.createElement = createElement;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _BemHelper = __webpack_require__(197);
+
+	var FormField = (function (_React$Component) {
+	    _inherits(FormField, _React$Component);
+
+	    _createClass(FormField, null, [{
+	        key: 'contextTypes',
+	        value: { changeHandler: _react.PropTypes.any },
+	        enumerable: true
+	    }]);
+
+	    function FormField() {
+	        _classCallCheck(this, FormField);
+
+	        _React$Component.call(this);
+	        this.handleChange = this.handleChange.bind(this);
+	    }
+
+	    FormField.prototype.render = function render() {
+	        return _react2['default'].createElement('input', {
+	            className: (0, _BemHelper.className)('input', this.getStyleMods()),
+	            type: 'text',
+	            value: this.formatValue(this.props.value),
+	            onChange: this.handleChange
+	        });
+	    };
+
+	    FormField.prototype.handleChange = function handleChange(e) {
+	        var id = this.props.fieldSpec.id;
+	        var value = this.parseValue(e.target.value);
+	        if (value === null) {
+	            return;
+	        }
+	        this.context.changeHandler(id, value);
+	    };
+
+	    FormField.prototype.formatValue = function formatValue(value) {
+	        return value;
+	    };
+
+	    FormField.prototype.parseValue = function parseValue(value) {
+	        return value;
+	    };
+
+	    FormField.prototype.getStyleMods = function getStyleMods() {
+	        return {};
+	    };
+
+	    return FormField;
+	})(_react2['default'].Component);
+
+	exports.FormField = FormField;
+
+	var IntegerField = (function (_FormField) {
+	    _inherits(IntegerField, _FormField);
+
+	    function IntegerField() {
+	        _classCallCheck(this, IntegerField);
+
+	        _FormField.apply(this, arguments);
+	    }
+
+	    IntegerField.prototype.formatValue = function formatValue(value) {
+	        return value.toString();
+	    };
+
+	    IntegerField.prototype.parseValue = function parseValue(value) {
+	        return parseInt(value, 10);
+	    };
+
+	    IntegerField.prototype.getStyleMods = function getStyleMods() {
+	        return { numeric: true };
+	    };
+
+	    return IntegerField;
+	})(FormField);
+
+	exports.IntegerField = IntegerField;
+
+	var FloatField = (function (_FormField2) {
+	    _inherits(FloatField, _FormField2);
+
+	    function FloatField() {
+	        _classCallCheck(this, FloatField);
+
+	        _FormField2.apply(this, arguments);
+	    }
+
+	    FloatField.prototype.formatValue = function formatValue(value) {
+	        return value.toString().replace('.', ',');
+	    };
+
+	    FloatField.prototype.parseValue = function parseValue(value) {
+	        return parseFloat(value.replace(',', '.'));
+	    };
+
+	    FloatField.prototype.getStyleMods = function getStyleMods() {
+	        return { numeric: true };
+	    };
+
+	    return FloatField;
+	})(FormField);
+
+	exports.FloatField = FloatField;
+
+	var TextareaField = (function (_FormField3) {
+	    _inherits(TextareaField, _FormField3);
+
+	    function TextareaField() {
+	        _classCallCheck(this, TextareaField);
+
+	        _FormField3.apply(this, arguments);
+	    }
+
+	    TextareaField.prototype.render = function render() {
+	        return _react2['default'].createElement('textarea', {
+	            className: 'input',
+	            value: this.formatValue(this.props.value),
+	            onChange: this.handleChange
+	        });
+	    };
+
+	    return TextareaField;
+	})(FormField);
+
+	exports.TextareaField = TextareaField;
+
+	var SelectField = (function (_FormField4) {
+	    _inherits(SelectField, _FormField4);
+
+	    function SelectField() {
+	        _classCallCheck(this, SelectField);
+
+	        _FormField4.apply(this, arguments);
+	    }
+
+	    SelectField.prototype.render = function render() {
+	        var items = this.props.fieldSpec.values;
+	        return _react2['default'].createElement(
+	            'select',
+	            { value: this.props.value, onChange: this.handleChange },
+	            items.map(function (item) {
+	                return _react2['default'].createElement(
+	                    'option',
+	                    { key: item.id, value: item.id },
+	                    item.name
+	                );
+	            })
+	        );
+	    };
+
+	    return SelectField;
+	})(FormField);
+
+	exports.SelectField = SelectField;
+
+	var componentMap = {
+	    'TEXT': FormField,
+	    'DATE': FormField,
+	    'INTEGER': IntegerField,
+	    'FLOAT': FloatField,
+	    'TEXTAREA': TextareaField,
+	    'SELECT': SelectField
+	};
+
+	function createElement(fieldSpec, value) {
+	    var type = fieldSpec.type;
+	    if (!(type in componentMap)) {
+	        throw new Error('unknown field type: ' + type);
+	    }
+	    return _react2['default'].createElement(componentMap[type], { fieldSpec: fieldSpec, value: value });
+	}
 
 /***/ }
 /******/ ]);
