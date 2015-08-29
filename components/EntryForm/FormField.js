@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import DatePicker from 'react-date-picker';
+import './FormField.less';
 import {className} from '../BemHelper';
 
 export class FormField extends React.Component {
@@ -100,9 +102,36 @@ export class SelectField extends FormField {
 }
 
 
+export class DateField extends FormField {
+    render() {
+        return (
+            <div>
+                <input
+                    className={className('input', this.getStyleMods())}
+                    type="text"
+                    value={this.formatValue(this.props.value)}
+                    onChange={this.handleChange}
+                />
+                <DatePicker
+                    locale="ru"
+                    dateFormat="DD.MM.YYYY"
+                    date={this.props.value}
+                    onChange={this.handleChange}
+                    todayText="Показать текущий месяц"
+                />
+            </div>
+        );
+    }
+    handleChange(value) {
+        var id = this.props.fieldSpec.id;
+        this.context.changeHandler(id, value);
+    }
+}
+
+
 var componentMap = {
     'TEXT': FormField,
-    'DATE': FormField,
+    'DATE': DateField,
     'INTEGER': IntegerField,
     'FLOAT': FloatField,
     'TEXTAREA': TextareaField,

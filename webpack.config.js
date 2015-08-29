@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
     entry: './components/App',
-    output: { path: './', filename: 'bundle.js' },
+    output: { path: './bundle', filename: 'bundle.js' },
     module: {
         loaders: [
             //{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
