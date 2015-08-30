@@ -24541,8 +24541,6 @@
 	    value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -24557,27 +24555,48 @@
 
 	var _BemHelper = __webpack_require__(197);
 
-	var _FormField = __webpack_require__(212);
+	var _controlsControls = __webpack_require__(324);
 
-	var FormField = _interopRequireWildcard(_FormField);
+	var controls = _interopRequireWildcard(_controlsControls);
+
+	var _controlsDateInputDateInput = __webpack_require__(327);
+
+	var _controlsDateInputDateInput2 = _interopRequireDefault(_controlsDateInputDateInput);
 
 	__webpack_require__(315);
 
 	var bemBlock = 'entry-form';
 
+	var controlsMap = {
+	    'TEXT': controls.TextInput,
+	    'INTEGER': controls.IntegerNumberInput,
+	    'FLOAT': controls.FloatNumberInput,
+	    'TEXTAREA': controls.TextArea,
+	    'SELECT': controls.SelectBox,
+	    'DATE': _controlsDateInputDateInput2['default']
+	};
+
+	function createControlElement(fieldSpec, value, changeHandler) {
+	    var type = fieldSpec.type;
+	    if (!(type in controlsMap)) {
+	        return null;
+	        throw new Error('unknown field type: ' + type);
+	    }
+	    return _react2['default'].createElement(controlsMap[type], {
+	        fieldSpec: fieldSpec,
+	        value: value,
+	        changeHandler: changeHandler
+	    });
+	}
+
 	var EntryForm = (function (_React$Component) {
 	    _inherits(EntryForm, _React$Component);
-
-	    _createClass(EntryForm, null, [{
-	        key: 'childContextTypes',
-	        value: { changeHandler: _react.PropTypes.any },
-	        enumerable: true
-	    }]);
 
 	    function EntryForm(props) {
 	        _classCallCheck(this, EntryForm);
 
 	        _React$Component.call(this);
+	        this.fieldChangeHandler = this.handleFieldChange.bind(this);
 	        var values = {};props.data.entry.items.forEach(function (field) {
 	            return values[field.id] = field.type == 'SELECT' ? field.values.filter(function (val) {
 	                return val.selected;
@@ -24586,11 +24605,7 @@
 	        this.state = { values: values };
 	    }
 
-	    EntryForm.prototype.getChildContext = function getChildContext() {
-	        return { changeHandler: this.handleChange.bind(this) };
-	    };
-
-	    EntryForm.prototype.handleChange = function handleChange(id, value) {
+	    EntryForm.prototype.handleFieldChange = function handleFieldChange(id, value) {
 	        this.state.values[id] = value;
 	        this.forceUpdate();
 	    };
@@ -24620,7 +24635,7 @@
 	                            _react2['default'].createElement(
 	                                'td',
 	                                { className: (0, _BemHelper.className)(bemBlock, 'field-input') },
-	                                FormField.createElement(field, _this.state.values[field.id])
+	                                createControlElement(field, _this.state.values[field.id], _this.fieldChangeHandler)
 	                            )
 	                        );
 	                    })
@@ -24636,248 +24651,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 212 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	exports.createElement = createElement;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDatePicker = __webpack_require__(213);
-
-	var _reactDatePicker2 = _interopRequireDefault(_reactDatePicker);
-
-	__webpack_require__(322);
-
-	var _BemHelper = __webpack_require__(197);
-
-	var FormField = (function (_React$Component) {
-	    _inherits(FormField, _React$Component);
-
-	    _createClass(FormField, null, [{
-	        key: 'contextTypes',
-	        value: { changeHandler: _react.PropTypes.any },
-	        enumerable: true
-	    }]);
-
-	    function FormField() {
-	        _classCallCheck(this, FormField);
-
-	        _React$Component.call(this);
-	        this.handleChange = this.handleChange.bind(this);
-	    }
-
-	    FormField.prototype.render = function render() {
-	        return _react2['default'].createElement('input', {
-	            className: (0, _BemHelper.className)('input', this.getStyleMods()),
-	            type: 'text',
-	            value: this.formatValue(this.props.value),
-	            onChange: this.handleChange
-	        });
-	    };
-
-	    FormField.prototype.handleChange = function handleChange(e) {
-	        var id = this.props.fieldSpec.id;
-	        var value = this.parseValue(e.target.value);
-	        if (value === null) {
-	            return;
-	        }
-	        this.context.changeHandler(id, value);
-	    };
-
-	    FormField.prototype.formatValue = function formatValue(value) {
-	        return value;
-	    };
-
-	    FormField.prototype.parseValue = function parseValue(value) {
-	        return value;
-	    };
-
-	    FormField.prototype.getStyleMods = function getStyleMods() {
-	        return {};
-	    };
-
-	    return FormField;
-	})(_react2['default'].Component);
-
-	exports.FormField = FormField;
-
-	var IntegerField = (function (_FormField) {
-	    _inherits(IntegerField, _FormField);
-
-	    function IntegerField() {
-	        _classCallCheck(this, IntegerField);
-
-	        _FormField.apply(this, arguments);
-	    }
-
-	    IntegerField.prototype.formatValue = function formatValue(value) {
-	        return value.toString();
-	    };
-
-	    IntegerField.prototype.parseValue = function parseValue(value) {
-	        return parseInt(value, 10);
-	    };
-
-	    IntegerField.prototype.getStyleMods = function getStyleMods() {
-	        return { numeric: true };
-	    };
-
-	    return IntegerField;
-	})(FormField);
-
-	exports.IntegerField = IntegerField;
-
-	var FloatField = (function (_FormField2) {
-	    _inherits(FloatField, _FormField2);
-
-	    function FloatField() {
-	        _classCallCheck(this, FloatField);
-
-	        _FormField2.apply(this, arguments);
-	    }
-
-	    FloatField.prototype.formatValue = function formatValue(value) {
-	        return value.toString().replace('.', ',');
-	    };
-
-	    FloatField.prototype.parseValue = function parseValue(value) {
-	        return parseFloat(value.replace(',', '.'));
-	    };
-
-	    FloatField.prototype.getStyleMods = function getStyleMods() {
-	        return { numeric: true };
-	    };
-
-	    return FloatField;
-	})(FormField);
-
-	exports.FloatField = FloatField;
-
-	var TextareaField = (function (_FormField3) {
-	    _inherits(TextareaField, _FormField3);
-
-	    function TextareaField() {
-	        _classCallCheck(this, TextareaField);
-
-	        _FormField3.apply(this, arguments);
-	    }
-
-	    TextareaField.prototype.render = function render() {
-	        return _react2['default'].createElement('textarea', {
-	            className: 'input',
-	            value: this.formatValue(this.props.value),
-	            onChange: this.handleChange
-	        });
-	    };
-
-	    return TextareaField;
-	})(FormField);
-
-	exports.TextareaField = TextareaField;
-
-	var SelectField = (function (_FormField4) {
-	    _inherits(SelectField, _FormField4);
-
-	    function SelectField() {
-	        _classCallCheck(this, SelectField);
-
-	        _FormField4.apply(this, arguments);
-	    }
-
-	    SelectField.prototype.render = function render() {
-	        var items = this.props.fieldSpec.values;
-	        return _react2['default'].createElement(
-	            'select',
-	            { value: this.props.value, onChange: this.handleChange },
-	            items.map(function (item) {
-	                return _react2['default'].createElement(
-	                    'option',
-	                    { key: item.id, value: item.id },
-	                    item.name
-	                );
-	            })
-	        );
-	    };
-
-	    return SelectField;
-	})(FormField);
-
-	exports.SelectField = SelectField;
-
-	var DateField = (function (_FormField5) {
-	    _inherits(DateField, _FormField5);
-
-	    function DateField() {
-	        _classCallCheck(this, DateField);
-
-	        _FormField5.apply(this, arguments);
-	    }
-
-	    DateField.prototype.render = function render() {
-	        return _react2['default'].createElement(
-	            'div',
-	            null,
-	            _react2['default'].createElement('input', {
-	                className: (0, _BemHelper.className)('input', this.getStyleMods()),
-	                type: 'text',
-	                value: this.formatValue(this.props.value),
-	                onChange: this.handleChange
-	            }),
-	            _react2['default'].createElement(_reactDatePicker2['default'], {
-	                locale: 'ru',
-	                dateFormat: 'DD.MM.YYYY',
-	                date: this.props.value,
-	                onChange: this.handleChange,
-	                todayText: 'Показать текущий месяц'
-	            })
-	        );
-	    };
-
-	    DateField.prototype.handleChange = function handleChange(value) {
-	        var id = this.props.fieldSpec.id;
-	        this.context.changeHandler(id, value);
-	    };
-
-	    return DateField;
-	})(FormField);
-
-	exports.DateField = DateField;
-
-	var componentMap = {
-	    'TEXT': FormField,
-	    'DATE': DateField,
-	    'INTEGER': IntegerField,
-	    'FLOAT': FloatField,
-	    'TEXTAREA': TextareaField,
-	    'SELECT': SelectField
-	};
-
-	function createElement(fieldSpec, value) {
-	    var type = fieldSpec.type;
-	    if (!(type in componentMap)) {
-	        throw new Error('unknown field type: ' + type);
-	    }
-	    return _react2['default'].createElement(componentMap[type], { fieldSpec: fieldSpec, value: value });
-	}
-
-/***/ },
+/* 212 */,
 /* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38138,13 +37912,190 @@
 
 
 /***/ },
-/* 322 */
+/* 322 */,
+/* 323 */,
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(325);
+
+	var _BemHelper = __webpack_require__(197);
+
+	//todo: не наследование тут ни к чему, нужно сделать фабрику классов
+	//todo: перенести сюда также SearchInput и стили кнопок (и прочие ссылки из App.less)
+
+	var TextInput = (function (_React$Component) {
+	    _inherits(TextInput, _React$Component);
+
+	    function TextInput() {
+	        _classCallCheck(this, TextInput);
+
+	        _React$Component.call(this);
+	        this.handleChange = this.handleChange.bind(this);
+	    }
+
+	    TextInput.prototype.render = function render() {
+	        return _react2['default'].createElement('input', {
+	            className: (0, _BemHelper.className)('input', this.getStyleMods()),
+	            type: 'text',
+	            value: this.formatValue(this.props.value),
+	            onChange: this.handleChange
+	        });
+	    };
+
+	    TextInput.prototype.handleChange = function handleChange(e) {
+	        var id = this.props.fieldSpec.id;
+	        var value = this.parseValue(e.target.value);
+	        if (value === null) {
+	            return;
+	        }
+	        this.props.changeHandler(id, value);
+	    };
+
+	    TextInput.prototype.formatValue = function formatValue(value) {
+	        return value;
+	    };
+
+	    TextInput.prototype.parseValue = function parseValue(value) {
+	        return value;
+	    };
+
+	    TextInput.prototype.getStyleMods = function getStyleMods() {
+	        return {};
+	    };
+
+	    return TextInput;
+	})(_react2['default'].Component);
+
+	exports.TextInput = TextInput;
+
+	var IntegerNumberInput = (function (_TextInput) {
+	    _inherits(IntegerNumberInput, _TextInput);
+
+	    function IntegerNumberInput() {
+	        _classCallCheck(this, IntegerNumberInput);
+
+	        _TextInput.apply(this, arguments);
+	    }
+
+	    IntegerNumberInput.prototype.formatValue = function formatValue(value) {
+	        return value.toString();
+	    };
+
+	    IntegerNumberInput.prototype.parseValue = function parseValue(value) {
+	        return parseInt(value, 10);
+	    };
+
+	    IntegerNumberInput.prototype.getStyleMods = function getStyleMods() {
+	        return { numeric: true };
+	    };
+
+	    return IntegerNumberInput;
+	})(TextInput);
+
+	exports.IntegerNumberInput = IntegerNumberInput;
+
+	var FloatNumberInput = (function (_TextInput2) {
+	    _inherits(FloatNumberInput, _TextInput2);
+
+	    function FloatNumberInput() {
+	        _classCallCheck(this, FloatNumberInput);
+
+	        _TextInput2.apply(this, arguments);
+	    }
+
+	    FloatNumberInput.prototype.formatValue = function formatValue(value) {
+	        return value.toString().replace('.', ',');
+	    };
+
+	    FloatNumberInput.prototype.parseValue = function parseValue(value) {
+	        return parseFloat(value.replace(',', '.'));
+	    };
+
+	    FloatNumberInput.prototype.getStyleMods = function getStyleMods() {
+	        return { numeric: true };
+	    };
+
+	    return FloatNumberInput;
+	})(TextInput);
+
+	exports.FloatNumberInput = FloatNumberInput;
+
+	var TextArea = (function (_TextInput3) {
+	    _inherits(TextArea, _TextInput3);
+
+	    function TextArea() {
+	        _classCallCheck(this, TextArea);
+
+	        _TextInput3.apply(this, arguments);
+	    }
+
+	    TextArea.prototype.render = function render() {
+	        return _react2['default'].createElement('textarea', {
+	            className: 'input',
+	            value: this.formatValue(this.props.value),
+	            onChange: this.handleChange
+	        });
+	    };
+
+	    return TextArea;
+	})(TextInput);
+
+	exports.TextArea = TextArea;
+
+	var SelectBox = (function (_TextInput4) {
+	    _inherits(SelectBox, _TextInput4);
+
+	    function SelectBox() {
+	        _classCallCheck(this, SelectBox);
+
+	        _TextInput4.apply(this, arguments);
+	    }
+
+	    SelectBox.prototype.render = function render() {
+	        var items = this.props.fieldSpec.values;
+	        return _react2['default'].createElement(
+	            'select',
+	            { value: this.props.value, onChange: this.handleChange },
+	            items.map(function (item) {
+	                return _react2['default'].createElement(
+	                    'option',
+	                    { key: item.id, value: item.id },
+	                    item.name
+	                );
+	            })
+	        );
+	    };
+
+	    return SelectBox;
+	})(TextInput);
+
+	exports.SelectBox = SelectBox;
+
+/***/ },
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(323);
+	var content = __webpack_require__(326);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(201)(content, {});
@@ -38153,8 +38104,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./FormField.less", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./FormField.less");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./controls.less", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./controls.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -38164,7 +38115,117 @@
 	}
 
 /***/ },
-/* 323 */
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(200)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDatePicker = __webpack_require__(213);
+
+	var _reactDatePicker2 = _interopRequireDefault(_reactDatePicker);
+
+	var _controls = __webpack_require__(324);
+
+	var _BemHelper = __webpack_require__(197);
+
+	__webpack_require__(328);
+
+	var DateInput = (function (_TextInput) {
+	    _inherits(DateInput, _TextInput);
+
+	    function DateInput() {
+	        _classCallCheck(this, DateInput);
+
+	        _TextInput.apply(this, arguments);
+	    }
+
+	    DateInput.prototype.render = function render() {
+	        return _react2['default'].createElement(
+	            'div',
+	            null,
+	            _react2['default'].createElement('input', {
+	                className: (0, _BemHelper.className)('input', this.getStyleMods()),
+	                type: 'text',
+	                value: this.formatValue(this.props.value),
+	                onChange: this.handleChange
+	            }),
+	            _react2['default'].createElement(_reactDatePicker2['default'], {
+	                locale: 'ru',
+	                dateFormat: 'DD.MM.YYYY',
+	                date: this.props.value,
+	                onChange: this.handleChange,
+	                todayText: 'Показать текущий месяц'
+	            })
+	        );
+	    };
+
+	    DateInput.prototype.handleChange = function handleChange(value) {
+	        var id = this.props.fieldSpec.id;
+	        this.props.changeHandler(id, value);
+	    };
+
+	    return DateInput;
+	})(_controls.TextInput);
+
+	exports['default'] = DateInput;
+	module.exports = exports['default'];
+
+/***/ },
+/* 328 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(329);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(201)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./DateInput.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./DateInput.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(200)();

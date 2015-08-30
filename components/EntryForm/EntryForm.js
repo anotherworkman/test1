@@ -1,17 +1,41 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {className} from '../BemHelper';
-import * as FormField from './FormField';
-
+import * as controls from '../controls/controls';
+import DateInput from '../controls/DateInput/DateInput';
 
 import './EntryForm.less';
 const bemBlock = 'entry-form';
 
-export default class EntryForm extends React.Component {
 
-    static childContextTypes = { changeHandler: PropTypes.any };
+var controlsMap = {
+    'TEXT': controls.TextInput,
+    'INTEGER': controls.IntegerNumberInput,
+    'FLOAT': controls.FloatNumberInput,
+    'TEXTAREA': controls.TextArea,
+    'SELECT': controls.SelectBox,
+    'DATE': DateInput
+};
+
+
+function createControlElement(fieldSpec, value, changeHandler) {
+    var type = fieldSpec.type;
+    if (! (type in controlsMap)) {
+        return null;
+        throw new Error('unknown field type: ' + type);
+    }
+    return React.createElement(controlsMap[type], {
+        fieldSpec: fieldSpec,
+        value: value,
+        changeHandler: changeHandler
+    });
+}
+
+
+export default class EntryForm extends React.Component {
 
     constructor(props) {
         super();
+        this.fieldChangeHandler = this.handleFieldChange.bind(this);
         var values = {}; props.data.entry.items.forEach(field =>
             values[field.id] =
                 field.type == 'SELECT' ?
@@ -22,11 +46,7 @@ export default class EntryForm extends React.Component {
         this.state = { values: values };
     }
 
-    getChildContext() {
-        return { changeHandler: this.handleChange.bind(this) };
-    }
-
-    handleChange(id, value) {
+    handleFieldChange(id, value) {
         this.state.values[id] = value;
         this.forceUpdate();
     }
@@ -44,7 +64,7 @@ export default class EntryForm extends React.Component {
                                     {field.name}
                                 </td>
                                 <td className={className(bemBlock, 'field-input')}>
-                                    {FormField.createElement(field, this.state.values[field.id])}
+                                    {createControlElement(field, this.state.values[field.id], this.fieldChangeHandler)}
                                 </td>
                             </tr>
                         ))

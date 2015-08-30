@@ -1,11 +1,11 @@
-import React, {PropTypes} from 'react';
-import DatePicker from 'react-date-picker';
-import './FormField.less';
+import React from 'react';
+import './controls.less';
 import {className} from '../BemHelper';
 
-export class FormField extends React.Component {
+//todo: не наследование тут ни к чему, нужно сделать фабрику классов
+//todo: перенести сюда также SearchInput и стили кнопок (и прочие ссылки из App.less)
 
-    static contextTypes = { changeHandler: PropTypes.any };
+export class TextInput extends React.Component {
 
     constructor() {
         super();
@@ -29,7 +29,7 @@ export class FormField extends React.Component {
         if (value === null) {
             return;
         }
-        this.context.changeHandler(id, value)
+        this.props.changeHandler(id, value)
     }
 
     formatValue(value) {
@@ -47,7 +47,7 @@ export class FormField extends React.Component {
 }
 
 
-export class IntegerField extends FormField {
+export class IntegerNumberInput extends TextInput {
     formatValue(value) {
         return value.toString();
     }
@@ -60,7 +60,7 @@ export class IntegerField extends FormField {
 }
 
 
-export class FloatField extends FormField {
+export class FloatNumberInput extends TextInput {
     formatValue(value) {
         return value.toString().replace('.', ',');
     }
@@ -73,20 +73,20 @@ export class FloatField extends FormField {
 }
 
 
-export class TextareaField extends FormField {
+export class TextArea extends TextInput {
     render() {
         return (
             <textarea
                 className="input"
                 value={this.formatValue(this.props.value)}
                 onChange={this.handleChange}
-            />
+                />
         );
     }
 }
 
 
-export class SelectField extends FormField {
+export class SelectBox extends TextInput {
     render() {
         var items = this.props.fieldSpec.values;
         return (
@@ -101,48 +101,3 @@ export class SelectField extends FormField {
     }
 }
 
-
-export class DateField extends FormField {
-    render() {
-        return (
-            <div>
-                <input
-                    className={className('input', this.getStyleMods())}
-                    type="text"
-                    value={this.formatValue(this.props.value)}
-                    onChange={this.handleChange}
-                />
-                <DatePicker
-                    locale="ru"
-                    dateFormat="DD.MM.YYYY"
-                    date={this.props.value}
-                    onChange={this.handleChange}
-                    todayText="Показать текущий месяц"
-                />
-            </div>
-        );
-    }
-    handleChange(value) {
-        var id = this.props.fieldSpec.id;
-        this.context.changeHandler(id, value);
-    }
-}
-
-
-var componentMap = {
-    'TEXT': FormField,
-    'DATE': DateField,
-    'INTEGER': IntegerField,
-    'FLOAT': FloatField,
-    'TEXTAREA': TextareaField,
-    'SELECT': SelectField
-};
-
-
-export function createElement(fieldSpec, value) {
-    var type = fieldSpec.type;
-    if (! (type in componentMap)) {
-        throw new Error('unknown field type: ' + type);
-    }
-    return React.createElement(componentMap[type], { fieldSpec: fieldSpec, value: value });
-}
