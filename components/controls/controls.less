@@ -1,10 +1,17 @@
 .input {
     width: 100%;
     margin: 0;
-    padding: 5px 0 6px 5px;
+    box-sizing: border-box;
     border: solid 1px #CECECE;
+    padding: 5px 0 6px 5px;
     border-radius: 3px;
     line-height: 13px; // в firefox по-умолчанию 14px
+
+    &:focus {
+        outline: none;
+        border-color: #ACACAC;
+        background: #FBFAF4;
+    }
 
     &_searchable {
         //fixme: лушче бы сделать свой компонент, а не патчить хаками этот зоопарк
@@ -22,10 +29,9 @@
 
     }
 
-    &:focus {
-        outline: none;
-        border-color: #ACACAC;
-        background: #FBFAF4;
+    &_textarea {
+        height: 82px;
     }
+
 }
 

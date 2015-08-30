@@ -6,26 +6,30 @@
         font-size: 14px;
     }
 
-    &__field-label {
+    &__field-label-cell {
         padding: 0;
         padding-top: 5px;
         min-width: 160px;
         vertical-align: top;
     }
 
-    &__field-input {
+    &__field-input-cell {
         padding: 0;
         padding-bottom: 13px;
-        min-width: 233px;
+        min-width: 240px;
     }
 
-    & textarea {
-        min-height: 69px;
-        margin-bottom: -7px;
-    }
-
-    & select {
-        margin-top: 5px;
+    &__field-input-box {
+        &_type-integer,
+        &_type-float {
+            width: 50px;
+        }
+        &_type-textarea {
+            margin-bottom: -7px;
+        }
+        &_type-select {
+            padding-top: 3px;
+        }
     }
 
 }
