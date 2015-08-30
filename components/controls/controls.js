@@ -1,98 +1,102 @@
 import React from 'react';
-import './controls.less';
-import {className} from '../BemHelper';
 
-//todo: не наследование тут ни к чему, нужно сделать фабрику классов
-//todo: перенести сюда также SearchInput и стили кнопок (и прочие ссылки из App.less)
+import './controls.less';
+
 
 export class TextInput extends React.Component {
-
-    constructor() {
-        super();
-        this.handleChange = this.handleChange.bind(this);
-    }
-
     render() {
         return (
             <input
-                className={className('input', this.getStyleMods())}
+                className="input"
                 type="text"
-                value={this.formatValue(this.props.value)}
-                onChange={this.handleChange}
+                value={this.props.value}
+                onChange={e => this.props.onChange(e.target.value)}
                 />
         )
     }
+}
 
-    handleChange(e) {
-        var id = this.props.fieldSpec.id;
-        var value = this.parseValue(e.target.value);
-        if (value === null) {
-            return;
+
+export class SearchInput extends React.Component {
+    render() {
+        return (
+            <input
+                className="input input_searchable"
+                type="search"
+                placeholder={this.props.placeholder}
+                value={this.props.value}
+                onChange={e => this.props.onChange(e.target.value)}
+            />
+        )
+    }
+}
+
+
+export function FormattedInputClass(transformer) {
+
+    return class FormattedInput extends React.Component {
+        render() {
+            return (
+                <input
+                    className="input"
+                    type="text"
+                    value={transformer.format(this.props.value)}
+                    onChange={this.handleChange.bind(this)}
+                    />
+            )
         }
-        this.props.changeHandler(id, value)
-    }
-
-    formatValue(value) {
-        return value;
-    }
-
-    parseValue(value) {
-        return value;
-    }
-
-    getStyleMods() {
-        return {};
+        handleChange(e) {
+            var value = transformer.parse(e.target.value);
+            if (value === null || value === undefined || isNaN(value)) {
+                return;
+            }
+            this.props.onChange(value)
+        }
     }
 
 }
 
 
-export class IntegerNumberInput extends TextInput {
-    formatValue(value) {
-        return value.toString();
-    }
-    parseValue(value) {
-        return parseInt(value, 10);
-    }
-    getStyleMods() {
-        return { numeric: true };
-    }
-}
+export var IntegerNumberInput = FormattedInputClass({
+
+    format: value => value.toString(),
+
+    parse:  value => isFinite(value) ? parseInt(value, 10) : null
+
+});
 
 
-export class FloatNumberInput extends TextInput {
-    formatValue(value) {
-        return value.toString().replace('.', ',');
-    }
-    parseValue(value) {
-        return parseFloat(value.replace(',', '.'));
-    }
-    getStyleMods() {
-        return { numeric: true };
-    }
-}
+export var FloatNumberInput = FormattedInputClass({
+
+    format: value => value.toString().replace('.', ','),
+
+    parse:  value => isFinite(value) ? parseFloat(value.replace(',', '.')) : null
+
+});
 
 
-export class TextArea extends TextInput {
+export class TextArea extends React.Component {
     render() {
         return (
             <textarea
-                className="input"
-                value={this.formatValue(this.props.value)}
-                onChange={this.handleChange}
-                />
+                className="input input_textarea"
+                value={this.props.value}
+                onChange={e => this.props.onChange(e.target.value)}
+            />
         );
     }
 }
 
 
-export class SelectBox extends TextInput {
+export class SelectBox extends React.Component {
     render() {
-        var items = this.props.fieldSpec.values;
         return (
-            <select value={this.props.value} onChange={this.handleChange}>
+            <select
+                value={this.props.value}
+                onChange={e => this.props.onChange(e.target.value)}
+            >
                 {
-                    items.map(item => (
+                    this.props.items.map(item => (
                         <option key={item.id} value={item.id}>{item.name}</option>
                     ))
                 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import Nav from '../Nav/Nav';
 import EntriesTable from '../EntriesTable/EntriesTable';
+import {SearchInput} from '../controls/controls';
 import {className} from '../BemHelper';
 
+//todo: entries-filter сделать элементом, а не отдельным блоком
 import './DirectoryEntries.less';
 const bemBlock = 'directory-entries';
 
@@ -48,9 +50,7 @@ export default class DirectoryEntries extends React.Component {
                         <div className="entries-filter">
                             <div className="entries-filter__title">Фильтр</div>
                             <div className="entries-filter__input-form">
-                                <input
-                                    className="input"
-                                    type="search"
+                                <SearchInput
                                     placeholder="Поиск"
                                     value={this.state.searchText}
                                     onChange={this.handleFilterChange.bind(this)}
@@ -63,8 +63,7 @@ export default class DirectoryEntries extends React.Component {
         )
     }
 
-    handleFilterChange(e) {
-        var searchText = e.target.value;
+    handleFilterChange(searchText) {
         this.setState({
             searchText: searchText,
             filteredEntries: this.filterEntries(this.state.entries, searchText)

@@ -20,14 +20,16 @@ var controlsMap = {
 function createControlElement(fieldSpec, value, changeHandler) {
     var type = fieldSpec.type;
     if (! (type in controlsMap)) {
-        return null;
         throw new Error('unknown field type: ' + type);
     }
-    return React.createElement(controlsMap[type], {
-        fieldSpec: fieldSpec,
+    var props = {
         value: value,
-        changeHandler: changeHandler
-    });
+        onChange: value => changeHandler(fieldSpec.id, value)
+    };
+    if (type == 'SELECT') {
+        props.items = fieldSpec.values
+    }
+    return React.createElement(controlsMap[type], props);
 }
 
 

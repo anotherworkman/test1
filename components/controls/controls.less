@@ -1,1 +1,31 @@
-//todo
+.input {
+    width: 100%;
+    margin: 0;
+    padding: 5px 0 6px 5px;
+    border: solid 1px #CECECE;
+    border-radius: 3px;
+    line-height: 13px; // в firefox по-умолчанию 14px
+
+    &_searchable {
+        //fixme: лушче бы сделать свой компонент, а не патчить хаками этот зоопарк
+        -webkit-appearance: textfield; // не searchfield т.к. иначе в safari высота поля дискретная
+
+        &::-webkit-search-decoration {
+            -webkit-appearance: none; // разные паддинги в chrome и safari
+        }
+        &::-webkit-search-cancel-button {
+            // margin срабатывает только в chorme,
+            // пользуемся этим, чтобы сделать одинаковым отступ у [x]
+            margin-right: 4px;
+            margin-bottom: -1px;
+        }
+
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #ACACAC;
+        background: #FBFAF4;
+    }
+}
+
