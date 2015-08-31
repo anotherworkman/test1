@@ -32,49 +32,6 @@ export class SearchInput extends React.Component {
 }
 
 
-export function FormattedInputClass(transformer) {
-
-    return class FormattedInput extends React.Component {
-        render() {
-            return (
-                <input
-                    className="input"
-                    type="text"
-                    value={transformer.format(this.props.value)}
-                    onChange={this.handleChange.bind(this)}
-                    />
-            )
-        }
-        handleChange(e) {
-            var value = transformer.parse(e.target.value);
-            if (value === null || value === undefined || isNaN(value)) {
-                return;
-            }
-            this.props.onChange(value)
-        }
-    }
-
-}
-
-
-export var IntegerNumberInput = FormattedInputClass({
-
-    format: value => value.toString(),
-
-    parse:  value => isFinite(value) ? parseInt(value, 10) : null
-
-});
-
-
-export var FloatNumberInput = FormattedInputClass({
-
-    format: value => value.toString().replace('.', ','),
-
-    parse:  value => isFinite(value) ? parseFloat(value.replace(',', '.')) : null
-
-});
-
-
 export class TextArea extends React.Component {
     render() {
         return (

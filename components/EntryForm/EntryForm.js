@@ -6,6 +6,11 @@ import DateInput from '../controls/DateInput/DateInput';
 import './EntryForm.less';
 const bemBlock = 'entry-form';
 
+var valueFormatters = {
+    'INTEGER': field => field.value.toString(),
+    'FLOAT':   field => field.value.toString().replace('.', ','),
+    'SELECT':  field => field.values.filter(value => value.selected)[0].id
+}
 
 export default class EntryForm extends React.Component {
 
@@ -13,15 +18,10 @@ export default class EntryForm extends React.Component {
         super();
         this.fieldChangeHandler = this.handleFieldChange.bind(this);
         var values = {}; props.data.entry.items.forEach(field =>
-            values[field.id] =
-                field.type == 'SELECT' ?
-                    field.values.filter(val => val.selected)[0].id
-                    :
-                    field.value
+            values[field.id] = field.type in valueFormatters ? valueFormatters[field.type](field) : field.value
         );
         this.state = { values: values };
     }
-
 
     render() {
         var fields = this.props.data.entry.items;
@@ -53,7 +53,6 @@ export default class EntryForm extends React.Component {
         )
     }
 
-
     handleFieldChange(id, value) {
         this.state.values[id] = value;
         this.forceUpdate();
@@ -63,12 +62,12 @@ export default class EntryForm extends React.Component {
 
 
 var controlsMap = {
-    'TEXT': controls.TextInput,
-    'INTEGER': controls.IntegerNumberInput,
-    'FLOAT': controls.FloatNumberInput,
+    'TEXT':     controls.TextInput,
+    'INTEGER':  controls.TextInput,
+    'FLOAT':    controls.TextInput,
     'TEXTAREA': controls.TextArea,
-    'SELECT': controls.SelectBox,
-    'DATE': DateInput
+    'SELECT':   controls.SelectBox,
+    'DATE':     DateInput
 };
 
 
