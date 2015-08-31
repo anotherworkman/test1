@@ -1,176 +1,209 @@
-//todo: обернуть это безобразие в бем-блок
+@block: ~".date-input";
+@{block} {
 
-.date-picker {
-    position: absolute;
-    top: 250px;
-    left: 300px;
-    -webkit-user-select: none;
-    background: #FBFAF4;
-    border-radius: 10px;
+    position: relative;
+
+    &__picker-toggler {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 26px;
+        height: 26px;
+        box-sizing: border-box;
+        border: solid 1px #ACACAC;
+        border-radius: 3px;
+        background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);
+        -webkit-user-select: none;
+
+        @{block}_pickerActive & {
+            background: linear-gradient(to top, #fbfbfb, #d4d4d4);
+        }
+    }
+
+    &__picker-box {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        outline: none;
+    }
+}
+
+
+// styling external component (no bem below)
+
+.date-input__picker-box > .date-picker {
+
+    margin-left: -26px;
+    box-sizing: border-box;
+    width: 284px;
     border: solid 1px #ACACAC;
+    border-radius: 10px;
     padding: 5px  15px;
+    background: #FBFAF4;
     box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);
+    -webkit-user-select: none;
 
     *[tabindex] {
         outline: none;
     }
 
-}
+    .dp {
 
-.pseudo-link() {
-    display: inline-block;
-    border-bottom: dotted 1px #BCD7E4;
-    line-height: 0.8;
-    color: #235FBE;
-    cursor: pointer;
-}
-
-.dp {
-
-    // header
-
-    &-nav-table > &-row {
-        position: relative;
-        box-sizing: border-box;
-        height: 35px;
-        padding-top: 7px;
-    }
-
-    &-prev-nav, &-next-nav {
-        position: absolute;
-        cursor: pointer;
-        top: 7px;
-        border: solid 1px #CECECE;
-        border-radius: 3px;
-        width: 30px;
-        height: 20px;
-        background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);
-        text-align: center;
-
-        &:active {
-            background: rgba(184, 189, 185, 0.19);
-        }
-    }
-    &-prev-nav {
-        right: 38px;
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-    }
-    &-next-nav {
-        right: 7px;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-    }
-
-    &-nav-view {
-        .pseudo-link();
-        margin-left: 9px;
-        padding-top: 5px;
-        position: relative;
-
-        &:first-letter {
-            text-transform: uppercase;
+        .pseudo-link() {
+            display: inline-block;
+            border-bottom: dotted 1px #BCD7E4;
+            line-height: 0.8;
+            color: #235FBE;
+            cursor: pointer;
         }
 
-        &:after {
-            // фиксируем а активную область у переключателя, т.к. длина псевдо-ссылки не постоянна
-            content: "";
+        // header
+
+        &-nav-table > .dp-row {
+            position: relative;
+            box-sizing: border-box;
+            height: 35px;
+            padding-top: 7px;
+        }
+
+        &-prev-nav, &-next-nav {
             position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 100px;
+            cursor: pointer;
+            top: 5px;
+            border: solid 1px #CECECE;
+            border-radius: 3px;
+            width: 30px;
+            height: 21px;
+            background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);
+            text-align: center;
+
+            &:active {
+                background: rgba(184, 189, 185, 0.19);
+            }
         }
-    }
-
-
-    // body
-
-    @selection-color: #3799F7;
-    @grid-width: 252px; // должно делиться на 4 и на 7
-    @grid-height: 168px; // должно делиться на 3 и на 7
-
-    .cell() {
-        display: inline-block;
-        vertical-align: top;
-        box-sizing: border-box;
-        font-size: 12px;
-    }
-    .clickable-cell() {
-        cursor: pointer;
-        border-radius: 3px;
-        &:hover {
-            background: fade(@selection-color, 20%);
+        &-prev-nav {
+            right: 38px;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
         }
-    }
-    .day-cell() {
-        .cell();
-        width: @grid-width / 7;
-        height: @grid-height / 7;
-    }
-    &-week-day-name {
-        .day-cell();
-        text-align: center;
-        padding-top: 3px;
-        &:first-letter {
-            text-transform: uppercase;
+        &-next-nav {
+            right: 7px;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
         }
-    }
-    &-day {
-        .day-cell();
-        .clickable-cell();
-        padding-top: 5px;
-        padding-right: 11px;
-        text-align: right;
-        cursor: pointer;
-    }
-    &-year, &-month {
-        .cell();
-        .clickable-cell();
-        width: @grid-width / 4;
-        height: @grid-height /3;
-        padding-top: 21px;
-        text-align: center;
-        cursor: pointer;
-    }
-    &-month {
-        &:first-letter {
-            text-transform: uppercase;
-        }
-    }
-    &-prev, &-next { // этой не кнопки, это ячейки из других диапазонов
-        color: #ccc;
-    }
-    &-value { // выбранная ячейка
-        background: @selection-color;
-        color: #fff;
-        &:hover {
-            background: @selection-color;
-        }
-    }
-    &-current { // текущая дана
-        font-weight: bold;
-        color: #D40000;
-    }
-    &-current&-value {
-        color: #fff;
-    }
 
-
-    // footer
-
-    &-footer {
-        padding-top: 7px;
-        text-align: center;
-
-        &-today {
+        &-nav-view {
             .pseudo-link();
+            margin-left: 9px;
+            padding-top: 5px;
+            position: relative;
+
+            &:first-letter {
+                text-transform: uppercase;
+            }
+
+            &:after {
+                // фиксируем а активную область у переключателя, т.к. длина псевдо-ссылки не постоянна
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 100px;
+            }
+        }
+
+
+        // body
+
+        @selection-color: #3799F7;
+        @grid-width: 252px; // должно делиться на 4 и на 7
+        @grid-height: 168px; // должно делиться на 3 и на 7
+
+        .cell() {
+            display: inline-block;
+            vertical-align: top;
+            box-sizing: border-box;
             font-size: 12px;
         }
-
-        &-selected {
-            display: none;
+        .clickable-cell() {
+            cursor: pointer;
+            border-radius: 3px;
+            &:hover {
+                background: fade(@selection-color, 20%);
+            }
         }
+        .day-cell() {
+            .cell();
+            width: @grid-width / 7;
+            height: @grid-height / 7;
+        }
+        &-week-day-name {
+            .day-cell();
+            text-align: center;
+            padding-top: 3px;
+            &:first-letter {
+                text-transform: uppercase;
+            }
+        }
+        &-day {
+            .day-cell();
+            .clickable-cell();
+            padding-top: 5px;
+            padding-right: 11px;
+            text-align: right;
+            cursor: pointer;
+        }
+        &-year, &-month {
+            .cell();
+            .clickable-cell();
+            width: @grid-width / 4;
+            height: @grid-height /3;
+            padding-top: 21px;
+            text-align: center;
+            cursor: pointer;
+        }
+        &-month {
+            &:first-letter {
+                text-transform: uppercase;
+            }
+        }
+        &-prev, &-next { // этой не кнопки, это ячейки из других диапазонов
+            color: #ccc;
+        }
+        &-value { // выбранная ячейка
+            background: @selection-color;
+            color: #fff;
+            &:hover {
+                background: @selection-color;
+            }
+        }
+        &-current { // текущая дата
+            font-weight: bold;
+            color: #D40000;
+        }
+        &-current.dp-value {
+            color: #fff;
+        }
+
+
+        // footer
+
+        &-footer {
+            padding-top: 7px;
+            text-align: center;
+
+            &-today {
+                .pseudo-link();
+                font-size: 12px;
+            }
+
+            &-selected {
+                display: none;
+            }
+        }
+
     }
+
 
 }

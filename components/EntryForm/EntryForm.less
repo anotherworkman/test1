@@ -16,13 +16,18 @@
     &__field-input-cell {
         padding: 0;
         padding-bottom: 13px;
-        min-width: 240px;
     }
 
     &__field-input-box {
+        &_type-text {
+            width: 240px;
+        }
         &_type-integer,
         &_type-float {
             width: 50px;
+        }
+        &_type-date {
+            width: 110px;
         }
         &_type-textarea {
             margin-bottom: -7px;

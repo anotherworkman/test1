@@ -72,7 +72,7 @@
 
 	var _DirectoryEntriesDirectoryEntries2 = _interopRequireDefault(_DirectoryEntriesDirectoryEntries);
 
-	var _EntryFormEntryForm = __webpack_require__(211);
+	var _EntryFormEntryForm = __webpack_require__(214);
 
 	var _EntryFormEntryForm2 = _interopRequireDefault(_EntryFormEntryForm);
 
@@ -24220,13 +24220,13 @@
 
 	var _EntriesTableEntriesTable2 = _interopRequireDefault(_EntriesTableEntriesTable);
 
-	var _controlsControls = __webpack_require__(212);
+	var _controlsControls = __webpack_require__(209);
 
 	var _BemHelper = __webpack_require__(197);
 
 	//todo: entries-filter сделать элементом, а не отдельным блоком
 
-	__webpack_require__(209);
+	__webpack_require__(212);
 
 	var bemBlock = 'directory-entries';
 
@@ -24496,169 +24496,6 @@
 /* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(210);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(201)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./DirectoryEntries.less", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./DirectoryEntries.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 210 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(200)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".directory-entries__entries-box {\n  white-space: nowrap;\n}\n.directory-entries__entries-table-box {\n  display: inline-block;\n  white-space: normal;\n}\n.directory-entries__entries-filter-box {\n  display: inline-block;\n  white-space: normal;\n  vertical-align: top;\n  padding-left: 30px;\n  padding-top: 15px;\n}\n.entries-filter__title {\n  font-size: 14px;\n  padding-left: 15px;\n  margin-bottom: 10px;\n}\n.entries-filter__input-form {\n  border: solid 1px #CECECE;\n  border-radius: 10px;\n  padding: 15px 15px 48px;\n  width: 180px;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _BemHelper = __webpack_require__(197);
-
-	var _controlsControls = __webpack_require__(212);
-
-	var controls = _interopRequireWildcard(_controlsControls);
-
-	var _controlsDateInputDateInput = __webpack_require__(215);
-
-	var _controlsDateInputDateInput2 = _interopRequireDefault(_controlsDateInputDateInput);
-
-	__webpack_require__(318);
-
-	var bemBlock = 'entry-form';
-
-	var controlsMap = {
-	    'TEXT': controls.TextInput,
-	    'INTEGER': controls.IntegerNumberInput,
-	    'FLOAT': controls.FloatNumberInput,
-	    'TEXTAREA': controls.TextArea,
-	    'SELECT': controls.SelectBox,
-	    'DATE': _controlsDateInputDateInput2['default']
-	};
-
-	function createControlElement(fieldSpec, value, changeHandler) {
-	    var type = fieldSpec.type;
-	    if (!(type in controlsMap)) {
-	        throw new Error('unknown field type: ' + type);
-	    }
-	    var props = {
-	        value: value,
-	        onChange: function onChange(value) {
-	            return changeHandler(fieldSpec.id, value);
-	        }
-	    };
-	    if (type == 'SELECT') {
-	        props.items = fieldSpec.values;
-	    }
-	    return _react2['default'].createElement(controlsMap[type], props);
-	}
-
-	var EntryForm = (function (_React$Component) {
-	    _inherits(EntryForm, _React$Component);
-
-	    function EntryForm(props) {
-	        _classCallCheck(this, EntryForm);
-
-	        _React$Component.call(this);
-	        this.fieldChangeHandler = this.handleFieldChange.bind(this);
-	        var values = {};props.data.entry.items.forEach(function (field) {
-	            return values[field.id] = field.type == 'SELECT' ? field.values.filter(function (val) {
-	                return val.selected;
-	            })[0].id : field.value;
-	        });
-	        this.state = { values: values };
-	    }
-
-	    EntryForm.prototype.handleFieldChange = function handleFieldChange(id, value) {
-	        this.state.values[id] = value;
-	        this.forceUpdate();
-	    };
-
-	    EntryForm.prototype.render = function render() {
-	        var _this = this;
-
-	        var fields = this.props.data.entry.items;
-	        return _react2['default'].createElement(
-	            'div',
-	            { className: bemBlock },
-	            _react2['default'].createElement(
-	                'table',
-	                { className: (0, _BemHelper.className)(bemBlock, 'table') },
-	                _react2['default'].createElement(
-	                    'tbody',
-	                    null,
-	                    fields.map(function (field) {
-	                        return _react2['default'].createElement(
-	                            'tr',
-	                            { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'field') },
-	                            _react2['default'].createElement(
-	                                'td',
-	                                { className: (0, _BemHelper.className)(bemBlock, 'field-label') },
-	                                field.name
-	                            ),
-	                            _react2['default'].createElement(
-	                                'td',
-	                                { className: (0, _BemHelper.className)(bemBlock, 'field-input') },
-	                                createControlElement(field, _this.state.values[field.id], _this.fieldChangeHandler)
-	                            )
-	                        );
-	                    })
-	                )
-	            )
-	        );
-	    };
-
-	    return EntryForm;
-	})(_react2['default'].Component);
-
-	exports['default'] = EntryForm;
-	module.exports = exports['default'];
-
-/***/ },
-/* 212 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -24676,7 +24513,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(213);
+	__webpack_require__(210);
 
 	var TextInput = (function (_React$Component) {
 	    _inherits(TextInput, _React$Component);
@@ -24854,13 +24691,13 @@
 	exports.SelectBox = SelectBox;
 
 /***/ },
-/* 213 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(214);
+	var content = __webpack_require__(211);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(201)(content, {});
@@ -24880,7 +24717,7 @@
 	}
 
 /***/ },
-/* 214 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(200)();
@@ -24888,10 +24725,179 @@
 
 
 	// module
-	exports.push([module.id, ".input {\n  width: 100%;\n  margin: 0;\n  padding: 5px 0 6px 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  line-height: 13px;\n}\n.input_searchable {\n  -webkit-appearance: textfield;\n}\n.input_searchable::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input_searchable::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n", ""]);
+	exports.push([module.id, ".input {\n  width: 100%;\n  margin: 0;\n  box-sizing: border-box;\n  border: solid 1px #CECECE;\n  padding: 5px 0 6px 5px;\n  border-radius: 3px;\n  line-height: 13px;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n.input_searchable {\n  -webkit-appearance: textfield;\n}\n.input_searchable::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input_searchable::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input_textarea {\n  height: 82px;\n}\n", ""]);
 
 	// exports
 
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(213);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(201)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./DirectoryEntries.less", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./DirectoryEntries.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(200)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".directory-entries__entries-box {\n  white-space: nowrap;\n}\n.directory-entries__entries-table-box {\n  display: inline-block;\n  white-space: normal;\n}\n.directory-entries__entries-filter-box {\n  display: inline-block;\n  white-space: normal;\n  vertical-align: top;\n  padding-left: 30px;\n  padding-top: 15px;\n}\n.entries-filter__title {\n  font-size: 14px;\n  padding-left: 15px;\n  margin-bottom: 10px;\n}\n.entries-filter__input-form {\n  border: solid 1px #CECECE;\n  border-radius: 10px;\n  padding: 15px 15px 48px;\n  width: 180px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _BemHelper = __webpack_require__(197);
+
+	var _controlsControls = __webpack_require__(209);
+
+	var controls = _interopRequireWildcard(_controlsControls);
+
+	var _controlsDateInputDateInput = __webpack_require__(215);
+
+	var _controlsDateInputDateInput2 = _interopRequireDefault(_controlsDateInputDateInput);
+
+	__webpack_require__(318);
+
+	var bemBlock = 'entry-form';
+
+	var EntryForm = (function (_React$Component) {
+	    _inherits(EntryForm, _React$Component);
+
+	    function EntryForm(props) {
+	        _classCallCheck(this, EntryForm);
+
+	        _React$Component.call(this);
+	        this.fieldChangeHandler = this.handleFieldChange.bind(this);
+	        var values = {};props.data.entry.items.forEach(function (field) {
+	            return values[field.id] = field.type == 'SELECT' ? field.values.filter(function (val) {
+	                return val.selected;
+	            })[0].id : field.value;
+	        });
+	        this.state = { values: values };
+	    }
+
+	    EntryForm.prototype.render = function render() {
+	        var _this = this;
+
+	        var fields = this.props.data.entry.items;
+	        return _react2['default'].createElement(
+	            'div',
+	            { className: bemBlock },
+	            _react2['default'].createElement(
+	                'table',
+	                { className: (0, _BemHelper.className)(bemBlock, 'table') },
+	                _react2['default'].createElement(
+	                    'tbody',
+	                    null,
+	                    fields.map(function (field) {
+	                        var value = _this.state.values[field.id];
+	                        var typeMod = field.type.toLowerCase();
+	                        return _react2['default'].createElement(
+	                            'tr',
+	                            { key: field.id, className: (0, _BemHelper.className)(bemBlock, 'field') },
+	                            _react2['default'].createElement(
+	                                'td',
+	                                { className: (0, _BemHelper.className)(bemBlock, 'field-label-cell') },
+	                                field.name
+	                            ),
+	                            _react2['default'].createElement(
+	                                'td',
+	                                { className: (0, _BemHelper.className)(bemBlock, 'field-input-cell') },
+	                                _react2['default'].createElement(
+	                                    'div',
+	                                    { className: (0, _BemHelper.className)(bemBlock, 'field-input-box', { type: typeMod }) },
+	                                    createControlElement(field, value, _this.fieldChangeHandler)
+	                                )
+	                            )
+	                        );
+	                    })
+	                )
+	            )
+	        );
+	    };
+
+	    EntryForm.prototype.handleFieldChange = function handleFieldChange(id, value) {
+	        this.state.values[id] = value;
+	        this.forceUpdate();
+	    };
+
+	    return EntryForm;
+	})(_react2['default'].Component);
+
+	exports['default'] = EntryForm;
+
+	var controlsMap = {
+	    'TEXT': controls.TextInput,
+	    'INTEGER': controls.IntegerNumberInput,
+	    'FLOAT': controls.FloatNumberInput,
+	    'TEXTAREA': controls.TextArea,
+	    'SELECT': controls.SelectBox,
+	    'DATE': _controlsDateInputDateInput2['default']
+	};
+
+	function createControlElement(fieldSpec, value, changeHandler) {
+	    var type = fieldSpec.type;
+	    if (!(type in controlsMap)) {
+	        throw new Error('unknown field type: ' + type);
+	    }
+	    var props = {
+	        value: value,
+	        onChange: function onChange(value) {
+	            return changeHandler(fieldSpec.id, value);
+	        }
+	    };
+	    if (type == 'SELECT') {
+	        props.items = fieldSpec.values;
+	    }
+	    return _react2['default'].createElement(controlsMap[type], props);
+	}
+	module.exports = exports['default'];
 
 /***/ },
 /* 215 */
@@ -24917,11 +24923,13 @@
 
 	var _reactDatePicker2 = _interopRequireDefault(_reactDatePicker);
 
-	var _controls = __webpack_require__(212);
+	var _controls = __webpack_require__(209);
 
-	//import {className} from '../../BemHelper';
+	var _BemHelper = __webpack_require__(197);
 
 	__webpack_require__(316);
+
+	var bemBlock = 'date-input';
 
 	var DateInput = (function (_React$Component) {
 	    _inherits(DateInput, _React$Component);
@@ -24929,22 +24937,79 @@
 	    function DateInput() {
 	        _classCallCheck(this, DateInput);
 
-	        _React$Component.apply(this, arguments);
+	        _React$Component.call(this);
+	        this.state = { pickerActive: false };
 	    }
 
 	    DateInput.prototype.render = function render() {
 	        return _react2['default'].createElement(
 	            'div',
-	            null,
-	            _react2['default'].createElement(_controls.TextInput, { value: this.props.value, onChange: this.props.onChange }),
-	            _react2['default'].createElement(_reactDatePicker2['default'], {
-	                locale: 'ru',
-	                dateFormat: 'DD.MM.YYYY',
-	                date: this.props.value,
-	                onChange: this.props.onChange,
-	                todayText: 'Показать текущий месяц'
-	            })
+	            {
+	                className: (0, _BemHelper.className)(bemBlock, { pickerActive: this.state.pickerActive })
+	            },
+	            _react2['default'].createElement(_controls.TextInput, {
+	                value: this.props.value,
+	                onChange: this.props.onChange
+	            }),
+	            _react2['default'].createElement('div', {
+	                className: (0, _BemHelper.className)(bemBlock, 'picker-toggler'),
+	                onClick: this.handlePickerTogglerClick.bind(this)
+	            }),
+	            this.state.pickerActive ? _react2['default'].createElement(
+	                'div',
+	                {
+	                    ref: 'picker',
+	                    className: (0, _BemHelper.className)(bemBlock, 'picker-box'),
+	                    tabIndex: '0',
+	                    onBlur: this.handlePickerBlur.bind(this),
+	                    onFocus: this.handlePickerFocus.bind(this)
+	                },
+	                _react2['default'].createElement(_reactDatePicker2['default'], {
+	                    locale: 'ru',
+	                    dateFormat: 'DD.MM.YYYY',
+	                    date: this.props.value,
+	                    onChange: this.props.onChange,
+	                    todayText: 'Показать текущий месяц'
+	                })
+	            ) : false
 	        );
+	    };
+
+	    DateInput.prototype.handlePickerTogglerClick = function handlePickerTogglerClick() {
+	        if (!this.state.pickerActive) {
+	            this.showPicker();
+	        }
+	        // else { раз был нажат toggler, то picker уже потерял фокус — сам уберется }
+	    };
+
+	    DateInput.prototype.showPicker = function showPicker() {
+	        var _this = this;
+
+	        this.setState({ pickerActive: true });
+	        setTimeout(function () {
+	            return _react2['default'].findDOMNode(_this.refs.picker).focus();
+	        }, 10);
+	    };
+
+	    DateInput.prototype.hidePicker = function hidePicker() {
+	        this.setState({ pickerActive: false });
+	    };
+
+	    // react любезно эмулирует всплытие foucs- и blur-событий
+
+	    DateInput.prototype.handlePickerFocus = function handlePickerFocus() {
+	        this.pickerFocused = true;
+	    };
+
+	    DateInput.prototype.handlePickerBlur = function handlePickerBlur() {
+	        var _this2 = this;
+
+	        this.pickerFocused = false;
+	        // не будем спешить, через мгновение известие о фокусе может вернуться,
+	        // если он перешел к потомку
+	        setTimeout(function () {
+	            return !_this2.pickerFocused && _this2.hidePicker();
+	        }, 10);
 	    };
 
 	    return DateInput;
@@ -37934,7 +37999,7 @@
 
 
 	// module
-	exports.push([module.id, ".date-picker {\n  position: absolute;\n  top: 250px;\n  left: 300px;\n  -webkit-user-select: none;\n  background: #FBFAF4;\n  border-radius: 10px;\n  border: solid 1px #ACACAC;\n  padding: 5px  15px;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n}\n.date-picker *[tabindex] {\n  outline: none;\n}\n.dp-nav-table > .dp-row {\n  position: relative;\n  box-sizing: border-box;\n  height: 35px;\n  padding-top: 7px;\n}\n.dp-prev-nav,\n.dp-next-nav {\n  position: absolute;\n  cursor: pointer;\n  top: 7px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  width: 30px;\n  height: 20px;\n  background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  text-align: center;\n}\n.dp-prev-nav:active,\n.dp-next-nav:active {\n  background: rgba(184, 189, 185, 0.19);\n}\n.dp-prev-nav {\n  right: 38px;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n}\n.dp-next-nav {\n  right: 7px;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n}\n.dp-nav-view {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  margin-left: 9px;\n  padding-top: 5px;\n  position: relative;\n}\n.dp-nav-view:first-letter {\n  text-transform: uppercase;\n}\n.dp-nav-view:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 100px;\n}\n.dp-week-day-name {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  text-align: center;\n  padding-top: 3px;\n}\n.dp-week-day-name:first-letter {\n  text-transform: uppercase;\n}\n.dp-day {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  border-radius: 3px;\n  padding-top: 5px;\n  padding-right: 11px;\n  text-align: right;\n  cursor: pointer;\n}\n.dp-day:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.dp-year,\n.dp-month {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  border-radius: 3px;\n  width: 63px;\n  height: 56px;\n  padding-top: 21px;\n  text-align: center;\n  cursor: pointer;\n}\n.dp-year:hover,\n.dp-month:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.dp-month:first-letter {\n  text-transform: uppercase;\n}\n.dp-prev,\n.dp-next {\n  color: #ccc;\n}\n.dp-value {\n  background: #3799f7;\n  color: #fff;\n}\n.dp-value:hover {\n  background: #3799f7;\n}\n.dp-current {\n  font-weight: bold;\n  color: #D40000;\n}\n.dp-current.dp-value {\n  color: #fff;\n}\n.dp-footer {\n  padding-top: 7px;\n  text-align: center;\n}\n.dp-footer-today {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  font-size: 12px;\n}\n.dp-footer-selected {\n  display: none;\n}\n", ""]);
+	exports.push([module.id, ".date-input {\n  position: relative;\n}\n.date-input__picker-toggler {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 26px;\n  height: 26px;\n  box-sizing: border-box;\n  border: solid 1px #ACACAC;\n  border-radius: 3px;\n  background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  -webkit-user-select: none;\n}\n.date-input_pickerActive .date-input__picker-toggler {\n  background: linear-gradient(to top, #fbfbfb, #d4d4d4);\n}\n.date-input__picker-box {\n  position: absolute;\n  top: 30px;\n  left: 50%;\n  outline: none;\n}\n.date-input__picker-box > .date-picker {\n  margin-left: -26px;\n  box-sizing: border-box;\n  width: 284px;\n  border: solid 1px #ACACAC;\n  border-radius: 10px;\n  padding: 5px  15px;\n  background: #FBFAF4;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n  -webkit-user-select: none;\n}\n.date-input__picker-box > .date-picker *[tabindex] {\n  outline: none;\n}\n.date-input__picker-box > .date-picker .dp-nav-table > .dp-row {\n  position: relative;\n  box-sizing: border-box;\n  height: 35px;\n  padding-top: 7px;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav,\n.date-input__picker-box > .date-picker .dp-next-nav {\n  position: absolute;\n  cursor: pointer;\n  top: 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  width: 30px;\n  height: 21px;\n  background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav:active,\n.date-input__picker-box > .date-picker .dp-next-nav:active {\n  background: rgba(184, 189, 185, 0.19);\n}\n.date-input__picker-box > .date-picker .dp-prev-nav {\n  right: 38px;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-next-nav {\n  right: 7px;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-nav-view {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  margin-left: 9px;\n  padding-top: 5px;\n  position: relative;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 100px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  text-align: center;\n  padding-top: 3px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-day {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  border-radius: 3px;\n  padding-top: 5px;\n  padding-right: 11px;\n  text-align: right;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-day:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-year,\n.date-input__picker-box > .date-picker .dp-month {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  border-radius: 3px;\n  width: 63px;\n  height: 56px;\n  padding-top: 21px;\n  text-align: center;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-year:hover,\n.date-input__picker-box > .date-picker .dp-month:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-month:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-prev,\n.date-input__picker-box > .date-picker .dp-next {\n  color: #ccc;\n}\n.date-input__picker-box > .date-picker .dp-value {\n  background: #3799f7;\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-value:hover {\n  background: #3799f7;\n}\n.date-input__picker-box > .date-picker .dp-current {\n  font-weight: bold;\n  color: #D40000;\n}\n.date-input__picker-box > .date-picker .dp-current.dp-value {\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-footer {\n  padding-top: 7px;\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-footer-today {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  font-size: 12px;\n}\n.date-input__picker-box > .date-picker .dp-footer-selected {\n  display: none;\n}\n", ""]);
 
 	// exports
 
@@ -37974,7 +38039,7 @@
 
 
 	// module
-	exports.push([module.id, ".entry-form__table {\n  margin-top: -10px;\n  border-collapse: collapse;\n  font-size: 14px;\n}\n.entry-form__field-label {\n  padding: 0;\n  padding-top: 5px;\n  min-width: 160px;\n  vertical-align: top;\n}\n.entry-form__field-input {\n  padding: 0;\n  padding-bottom: 13px;\n  min-width: 233px;\n}\n.entry-form textarea {\n  min-height: 69px;\n  margin-bottom: -7px;\n}\n.entry-form select {\n  margin-top: 5px;\n}\n", ""]);
+	exports.push([module.id, ".entry-form__table {\n  margin-top: -10px;\n  border-collapse: collapse;\n  font-size: 14px;\n}\n.entry-form__field-label-cell {\n  padding: 0;\n  padding-top: 5px;\n  min-width: 160px;\n  vertical-align: top;\n}\n.entry-form__field-input-cell {\n  padding: 0;\n  padding-bottom: 13px;\n}\n.entry-form__field-input-box_type-text {\n  width: 240px;\n}\n.entry-form__field-input-box_type-integer,\n.entry-form__field-input-box_type-float {\n  width: 50px;\n}\n.entry-form__field-input-box_type-date {\n  width: 110px;\n}\n.entry-form__field-input-box_type-textarea {\n  margin-bottom: -7px;\n}\n.entry-form__field-input-box_type-select {\n  padding-top: 3px;\n}\n", ""]);
 
 	// exports
 
