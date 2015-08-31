@@ -9,14 +9,22 @@ export default class Nav extends React.Component {
 
     static contextTypes = { router: PropTypes.any };
 
+    constructor(props, context) {
+        super(props, context);
+        this.state = this.getNavState(props.data);
+    }
+    componentWillReceiveProps(props) {
+        this.setState(this.getNavState(props.data));
+    }
+
     render() {
         return (
             <div className={bemBlock}>
                 {
-                    this.props.path && this.props.path.length ?
+                    this.state.path && this.state.path.length ?
                         <div className={className(bemBlock, 'path')}>
                         {
-                            this.props.path.map((item, index) => (
+                            this.state.path.map((item, index) => (
                                 <div key={index} className={className(bemBlock, 'path-item')}>
                                     <a
                                         href={this.context.router.makeHref(item.route, item.params)}
@@ -31,9 +39,34 @@ export default class Nav extends React.Component {
                     :
                         null
                 }
-                <div className={className(bemBlock, 'header')}>{this.props.title}</div>
+                <div className={className(bemBlock, 'header')}>{this.state.title}</div>
             </div>
         )
+    }
+
+    getNavState(data) {
+        if (! data) {
+            var currentTitle = this.state ? this.state.title : '';
+            return {
+                path: this.state ? this.state.path : [],
+                title: currentTitle + '...'
+            }
+        }
+        var path = [];
+        var title = 'Справочники';
+        var directory = data.directory || (data.entry && data.entry.directory);
+        if (directory) {
+            path.push({title: title, route: 'directories'});
+            title = directory.name;
+            if (data.entry) {
+                path.push({title: title, route: 'directory', params: {directoryId: directory.id} });
+                title = data.entry.name;
+            }
+        }
+        return {
+            path: path,
+            title: title
+        }
     }
 
     componentDidMount() {

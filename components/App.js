@@ -3,48 +3,53 @@ import 'es5-shim/es5-sham';
 
 import React from 'react';
 import Router, {Route, DefaultRoute, RouteHandler} from 'react-router-ie8';
+import xhr from 'xhr';
 
 import Nav from './Nav/Nav';
 import DirectoriesList from './DirectoriesList/DirectoriesList';
 import DirectoryEntries from './DirectoryEntries/DirectoryEntries';
 import EntryForm from './EntryForm/EntryForm';
 
-import directories from '../json/getDirectories.json';
-import directory from '../json/getDirectory.json';
-import entry from '../json/getEntry.json';
-
-var data = {
-    directories: directories.response,
-    directory: directory.response,
-    entry: entry.response
-};
-
 import './App.less';
 
 
 class App extends React.Component {
 
+    constructor(props, context) {
+        super(props, context);
+        this.state = { data: null };
+        this.loadData(props.activeRoute);
+    }
+    componentWillReceiveProps(props) {
+        this.setState({ data: null });
+        this.loadData(props.activeRoute);
+    }
+
     render() {
-        var navPath = [];
-        var navTitle = 'Справочники';
-        var data = this.props.data;
-        var directory = data.directory || (data.entry && data.entry.directory);
-        if (directory) {
-            navPath.push({title: navTitle, route: 'directories'});
-            navTitle = directory.name;
-            if (data.entry) {
-                navPath.push({title: navTitle, route: 'directory', params: {directoryId: directory.id} });
-                navTitle = data.entry.name;
-            }
-        }
+        var data = this.state.data;
         return (
             <div>
-                <Nav path={navPath} title={navTitle}/>
-                <RouteHandler data={data}/>
+                <Nav data={data}/>
+                {
+                    data ? <RouteHandler data={data}/> : null
+                }
             </div>
         )
     }
 
+    loadData(route) {
+        xhr({ url: this.getDataUrl(route) }).then(resp =>
+            this.setState({ data: JSON.parse(resp.body).response })
+        );
+    }
+
+    getDataUrl(route) {
+        return ({
+            directories: './json/getDirectories.json',
+            directory: './json/getDirectory.json',
+            entry: './json/getEntry.json'
+        })[route.name];
+    }
 }
 
 var routes = (
@@ -56,7 +61,5 @@ var routes = (
 );
 
 Router.run(routes, Router.HashLocation, (Root, state) => {
-    var routeName = state.routes[1].name;
-    var routeData = data[routeName];
-    React.render(<Root data={routeData}/>, document.body.firstChild);
+    React.render(<Root activeRoute={state.routes[1]}/>, document.body.firstChild);
 });

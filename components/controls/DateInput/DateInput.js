@@ -35,6 +35,7 @@ export default class DateInput extends React.Component {
                             tabIndex="0"
                             onBlur={this.handlePickerBlur.bind(this)}
                             onFocus={this.handlePickerFocus.bind(this)}
+                            onKeyDown={e => [13, 27].indexOf(e.keyCode) != -1 ? e.target.blur() : null}
                         >
                             <DatePicker
                                 locale="ru"
