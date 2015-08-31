@@ -37,7 +37,7 @@ export default class DirectoryEntries extends React.Component {
         var directory = this.props.data.directory;
         return (
             <div className={bemBlock}>
-                <div className="button">+ Создать новый</div>
+                <button className="button button_primary">+ Создать новый</button>
                 <div className={className(bemBlock, 'entries-box')}>
                     <div className={className(bemBlock, 'entries-table-box')}>
                         <EntriesTable

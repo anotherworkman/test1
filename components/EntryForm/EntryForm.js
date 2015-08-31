@@ -27,7 +27,7 @@ export default class EntryForm extends React.Component {
         var fields = this.props.data.entry.items;
         return (
             <div className={bemBlock}>
-                <table className={className(bemBlock, 'table')}>
+                <table className={className(bemBlock, 'fields')}>
                     <tbody>
                     {
                         fields.map(field => {
@@ -49,6 +49,17 @@ export default class EntryForm extends React.Component {
                     }
                     </tbody>
                 </table>
+                <div className={className(bemBlock, 'actions')}>
+                    <div className={className(bemBlock, 'action')}>
+                        <button className="button button_primary">Сохранить</button>
+                    </div>
+                    <div className={className(bemBlock, 'action')}>
+                        <button className="button">Отменить изменения</button>
+                    </div>
+                    <div className={className(bemBlock, 'action')}>
+                        <button className="button">Удалить</button>
+                    </div>
+                </div>
             </div>
         )
     }

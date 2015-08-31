@@ -80,19 +80,19 @@
 
 	var _EntryFormEntryForm2 = _interopRequireDefault(_EntryFormEntryForm);
 
-	var _jsonGetDirectoriesJson = __webpack_require__(322);
+	var _jsonGetDirectoriesJson = __webpack_require__(323);
 
 	var _jsonGetDirectoriesJson2 = _interopRequireDefault(_jsonGetDirectoriesJson);
 
-	var _jsonGetDirectoryJson = __webpack_require__(323);
+	var _jsonGetDirectoryJson = __webpack_require__(324);
 
 	var _jsonGetDirectoryJson2 = _interopRequireDefault(_jsonGetDirectoryJson);
 
-	var _jsonGetEntryJson = __webpack_require__(324);
+	var _jsonGetEntryJson = __webpack_require__(325);
 
 	var _jsonGetEntryJson2 = _interopRequireDefault(_jsonGetEntryJson);
 
-	__webpack_require__(325);
+	__webpack_require__(326);
 
 	var data = {
 	    directories: _jsonGetDirectoriesJson2['default'].response,
@@ -26418,8 +26418,8 @@
 	            'div',
 	            { className: bemBlock },
 	            _react2['default'].createElement(
-	                'div',
-	                { className: 'button' },
+	                'button',
+	                { className: 'button button_primary' },
 	                '+ Создать новый'
 	            ),
 	            _react2['default'].createElement(
@@ -26824,7 +26824,7 @@
 
 
 	// module
-	exports.push([module.id, ".input {\n  width: 100%;\n  margin: 0;\n  box-sizing: border-box;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  padding: 6px 0 5px 5px;\n  line-height: 13px;\n  font-size: 11.4px;\n  font-family: Arial, sans-serif;\n}\n.input:focus {\n  outline: none;\n  border-color: #ACACAC;\n  background: #FBFAF4;\n}\n.input_searchable {\n  -webkit-appearance: textfield;\n}\n.input_searchable::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input_searchable::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input_textarea {\n  height: 82px;\n}\n.select-box {\n  font-size: 11.4px;\n  font-family: Arial, sans-serif;\n}\n", ""]);
+	exports.push([module.id, ".input {\n  width: 100%;\n  margin: 0;\n  box-sizing: border-box;\n  border: solid 1px #cccccc;\n  border-radius: 3px;\n  padding: 6px 0 5px 5px;\n  line-height: 13px;\n  font-size: 11.4px;\n  font-family: Arial, sans-serif;\n}\n.input:focus {\n  outline: none;\n  border-color: #aaaaaa;\n  background: #fcfbf5;\n}\n.input_searchable {\n  -webkit-appearance: textfield;\n}\n.input_searchable::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n.input_searchable::-webkit-search-cancel-button {\n  margin-right: 4px;\n  margin-bottom: -1px;\n}\n.input_textarea {\n  height: 82px;\n}\n.select-box {\n  font-size: 11.4px;\n  font-family: Arial, sans-serif;\n}\n", ""]);
 
 	// exports
 
@@ -26901,7 +26901,7 @@
 
 	var _controlsDateInputDateInput2 = _interopRequireDefault(_controlsDateInputDateInput);
 
-	__webpack_require__(320);
+	__webpack_require__(321);
 
 	var bemBlock = 'entry-form';
 
@@ -26942,7 +26942,7 @@
 	            { className: bemBlock },
 	            _react2['default'].createElement(
 	                'table',
-	                { className: (0, _BemHelper.className)(bemBlock, 'table') },
+	                { className: (0, _BemHelper.className)(bemBlock, 'fields') },
 	                _react2['default'].createElement(
 	                    'tbody',
 	                    null,
@@ -26968,6 +26968,37 @@
 	                            )
 	                        );
 	                    })
+	                )
+	            ),
+	            _react2['default'].createElement(
+	                'div',
+	                { className: (0, _BemHelper.className)(bemBlock, 'actions') },
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: (0, _BemHelper.className)(bemBlock, 'action') },
+	                    _react2['default'].createElement(
+	                        'button',
+	                        { className: 'button button_primary' },
+	                        'Сохранить'
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: (0, _BemHelper.className)(bemBlock, 'action') },
+	                    _react2['default'].createElement(
+	                        'button',
+	                        { className: 'button' },
+	                        'Отменить изменения'
+	                    )
+	                ),
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: (0, _BemHelper.className)(bemBlock, 'action') },
+	                    _react2['default'].createElement(
+	                        'button',
+	                        { className: 'button' },
+	                        'Удалить'
+	                    )
 	                )
 	            )
 	        );
@@ -40110,19 +40141,25 @@
 
 
 	// module
-	exports.push([module.id, ".date-input {\n  position: relative;\n}\n.date-input__picker-toggler {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 26px;\n  height: 26px;\n  box-sizing: border-box;\n  border: solid 1px #ACACAC;\n  border-radius: 3px;\n  background-color: #eee;\n  background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  -webkit-user-select: none;\n}\n.date-input_pickerActive .date-input__picker-toggler {\n  background: linear-gradient(to top, #fbfbfb, #d4d4d4);\n}\n.date-input__picker-box {\n  position: absolute;\n  top: 30px;\n  left: 50%;\n  outline: none;\n}\n.date-input__picker-box > .date-picker {\n  margin-left: -26px;\n  box-sizing: border-box;\n  width: 284px;\n  border: solid 1px #ACACAC;\n  border-radius: 10px;\n  padding: 5px  15px;\n  background: #FBFAF4;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n  -webkit-user-select: none;\n}\n.date-input__picker-box > .date-picker *[tabindex] {\n  outline: none;\n}\n.date-input__picker-box > .date-picker .dp-nav-table > .dp-row {\n  position: relative;\n  box-sizing: border-box;\n  height: 35px;\n  padding-top: 7px;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav,\n.date-input__picker-box > .date-picker .dp-next-nav {\n  position: absolute;\n  cursor: pointer;\n  top: 5px;\n  border: solid 1px #CECECE;\n  border-radius: 3px;\n  width: 30px;\n  height: 21px;\n  background: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav:active,\n.date-input__picker-box > .date-picker .dp-next-nav:active {\n  background: rgba(184, 189, 185, 0.19);\n}\n.date-input__picker-box > .date-picker .dp-prev-nav {\n  right: 38px;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-next-nav {\n  right: 7px;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-nav-view {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  margin-left: 9px;\n  padding-top: 5px;\n  position: relative;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 100px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  text-align: center;\n  padding-top: 3px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-day {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  border-radius: 3px;\n  padding-top: 5px;\n  padding-right: 11px;\n  text-align: right;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-day:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-year,\n.date-input__picker-box > .date-picker .dp-month {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  border-radius: 3px;\n  width: 63px;\n  height: 56px;\n  padding-top: 21px;\n  text-align: center;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-year:hover,\n.date-input__picker-box > .date-picker .dp-month:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-month:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-prev,\n.date-input__picker-box > .date-picker .dp-next {\n  color: #ccc;\n}\n.date-input__picker-box > .date-picker .dp-value {\n  background: #3799f7;\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-value:hover {\n  background: #3799f7;\n}\n.date-input__picker-box > .date-picker .dp-current {\n  font-weight: bold;\n  color: #D40000;\n}\n.date-input__picker-box > .date-picker .dp-current.dp-value {\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-footer {\n  padding-top: 7px;\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-footer-today {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  font-size: 12px;\n}\n.date-input__picker-box > .date-picker .dp-footer-selected {\n  display: none;\n}\n", ""]);
+	exports.push([module.id, ".date-input {\n  position: relative;\n}\n.date-input__picker-toggler {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 26px;\n  height: 26px;\n  box-sizing: border-box;\n  border: solid 1px #b4b4b4;\n  border-radius: 3px;\n  background-color: #dedede;\n  background-image: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  background-repeat: no-repeat;\n  -webkit-user-select: none;\n}\n.date-input__picker-toggler:after {\n  content: '';\n  position: absolute;\n  background: url(" + __webpack_require__(320) + ") no-repeat;\n  width: 15px;\n  height: 11px;\n  top: 7px;\n  left: 4px;\n}\n.date-input_pickerActive .date-input__picker-toggler {\n  background-image: linear-gradient(to top, #fbfbfb, #d4d4d4);\n}\n.date-input__picker-box {\n  position: absolute;\n  top: 30px;\n  left: 50%;\n  outline: none;\n}\n.date-input__picker-box > .date-picker {\n  margin-left: -26px;\n  box-sizing: border-box;\n  width: 284px;\n  border: solid 1px #cccccc;\n  border-radius: 10px;\n  padding: 5px  15px;\n  background: #fcfbf5;\n  box-shadow: 3px 0px 15px rgba(50, 50, 50, 0.15);\n  -webkit-user-select: none;\n}\n.date-input__picker-box > .date-picker *[tabindex] {\n  outline: none;\n}\n.date-input__picker-box > .date-picker .dp-nav-table > .dp-row {\n  position: relative;\n  box-sizing: border-box;\n  height: 35px;\n  padding-top: 7px;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav,\n.date-input__picker-box > .date-picker .dp-next-nav {\n  position: absolute;\n  cursor: pointer;\n  top: 5px;\n  border: solid 1px #cccccc;\n  border-radius: 3px;\n  width: 30px;\n  height: 21px;\n  background-color: #e5e5e5;\n  background-image: linear-gradient(to bottom, #fbfbfb, #d4d4d4);\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-prev-nav:active,\n.date-input__picker-box > .date-picker .dp-next-nav:active {\n  background: rgba(184, 189, 185, 0.19);\n}\n.date-input__picker-box > .date-picker .dp-prev-nav {\n  right: 38px;\n  border-bottom-right-radius: 0;\n  border-top-right-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-next-nav {\n  right: 7px;\n  border-bottom-left-radius: 0;\n  border-top-left-radius: 0;\n}\n.date-input__picker-box > .date-picker .dp-nav-view {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  margin-left: 9px;\n  padding-top: 5px;\n  position: relative;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-nav-view:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 100px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  text-align: center;\n  padding-top: 3px;\n}\n.date-input__picker-box > .date-picker .dp-week-day-name:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-day {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  width: 36px;\n  height: 24px;\n  border-radius: 3px;\n  padding-top: 5px;\n  padding-right: 11px;\n  text-align: right;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-day:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-year,\n.date-input__picker-box > .date-picker .dp-month {\n  display: inline-block;\n  vertical-align: top;\n  box-sizing: border-box;\n  font-size: 12px;\n  border-radius: 3px;\n  width: 63px;\n  height: 56px;\n  padding-top: 21px;\n  text-align: center;\n  cursor: pointer;\n}\n.date-input__picker-box > .date-picker .dp-year:hover,\n.date-input__picker-box > .date-picker .dp-month:hover {\n  background: rgba(55, 153, 247, 0.2);\n}\n.date-input__picker-box > .date-picker .dp-month:first-letter {\n  text-transform: uppercase;\n}\n.date-input__picker-box > .date-picker .dp-prev,\n.date-input__picker-box > .date-picker .dp-next {\n  color: #ccc;\n}\n.date-input__picker-box > .date-picker .dp-value {\n  background: #3799f7;\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-value:hover {\n  background: #3799f7;\n}\n.date-input__picker-box > .date-picker .dp-current {\n  font-weight: bold;\n  color: #D40000;\n}\n.date-input__picker-box > .date-picker .dp-current.dp-value {\n  color: #fff;\n}\n.date-input__picker-box > .date-picker .dp-footer {\n  padding-top: 7px;\n  text-align: center;\n}\n.date-input__picker-box > .date-picker .dp-footer-today {\n  display: inline-block;\n  border-bottom: dotted 1px #BCD7E4;\n  line-height: 0.8;\n  color: #235FBE;\n  cursor: pointer;\n  font-size: 12px;\n}\n.date-input__picker-box > .date-picker .dp-footer-selected {\n  display: none;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
 /* 320 */
+/***/ function(module, exports) {
+
+	module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAALCAYAAACgR9dcAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAONJREFUeNqUUUkKhEAQs6A/5hv8gRfF/wh60Rfonzy64HZ0nUkPKdqTTEAwVZVOulqWZfFc1HV9f2H/gyCQqqosQc3lgDmO4yHetk3/0dv3Xfl1XbYmIj8xCiQUuMMQwxUz53naw8mlbduH+B+YPM/1DlEUSZZlesc4ji1HAiBJEknT9IYZ+gYLozNirevqcWEQTdPk8TBwt2+4bRQgHsdRY4Gjz2HweZ49JpGmadSZi+DwG8T3/ZvioigkDEN9Z3IOl2UpNLCxh2FQN8Tp+15T4EPf3QF7Vtx13eNd37iLjwADAMgW2s9fyjrUAAAAAElFTkSuQmCC"
+
+/***/ },
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(321);
+	var content = __webpack_require__(322);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(203)(content, {});
@@ -40142,7 +40179,7 @@
 	}
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(202)();
@@ -40150,13 +40187,13 @@
 
 
 	// module
-	exports.push([module.id, ".entry-form__table {\n  margin-top: -10px;\n  border-collapse: collapse;\n  font-size: 14px;\n}\n.entry-form__field-label-cell {\n  padding: 0;\n  padding-top: 5px;\n  min-width: 160px;\n  vertical-align: top;\n}\n.entry-form__field-input-cell {\n  padding: 0;\n  padding-bottom: 13px;\n}\n.entry-form__field-input-box_type-text {\n  width: 240px;\n}\n.entry-form__field-input-box_type-integer,\n.entry-form__field-input-box_type-float {\n  width: 50px;\n}\n.entry-form__field-input-box_type-date {\n  width: 110px;\n}\n.entry-form__field-input-box_type-textarea {\n  margin-bottom: -7px;\n}\n.entry-form__field-input-box_type-select {\n  padding-top: 3px;\n}\n", ""]);
+	exports.push([module.id, ".entry-form__fields {\n  margin-top: -10px;\n  border-collapse: collapse;\n  font-size: 14px;\n}\n.entry-form__field-label-cell {\n  padding: 0;\n  padding-top: 5px;\n  min-width: 160px;\n  vertical-align: top;\n}\n.entry-form__field-input-cell {\n  padding: 0;\n  padding-bottom: 13px;\n}\n.entry-form__field-input-box_type-text {\n  width: 240px;\n}\n.entry-form__field-input-box_type-integer,\n.entry-form__field-input-box_type-float {\n  width: 50px;\n}\n.entry-form__field-input-box_type-date {\n  width: 110px;\n}\n.entry-form__field-input-box_type-textarea {\n  margin-bottom: -7px;\n}\n.entry-form__field-input-box_type-select {\n  padding-top: 3px;\n}\n.entry-form__actions {\n  padding-top: 22px;\n}\n.entry-form__action {\n  display: inline-block;\n  margin-right: 20px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -40203,7 +40240,7 @@
 	}
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -40317,7 +40354,7 @@
 	}
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -40388,13 +40425,13 @@
 	}
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(326);
+	var content = __webpack_require__(327);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(203)(content, {});
@@ -40414,7 +40451,7 @@
 	}
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(202)();
@@ -40422,7 +40459,7 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=PT+Sans:400&subset=latin,cyrillic);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #E9F3EE;\n  margin: 20px 20px;\n}\n.link {\n  color: #235FBE;\n  -webkit-text-decoration-color: #BCD7E4;\n  text-decoration-color: #BCD7E4;\n}\n.button {\n  display: inline-block;\n  font-size: 14px;\n  color: #0B0B0B;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 15px;\n  background-color: #8AE99F;\n  background: linear-gradient(to bottom, #9df8b3, #75d68b);\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, "body {\n  font-family: 'PT Sans', sans-serif;\n  background: #eaf5ee;\n  margin: 20px 20px;\n}\n.link {\n  color: #0059bd;\n  -webkit-text-decoration-color: #bad6e4;\n  text-decoration-color: #bad6e4;\n}\n.button {\n  font-family: 'PT Sans', sans-serif;\n  font-size: 14px;\n  border: none;\n  color: #000000;\n  box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);\n  border-radius: 4px;\n  padding: 5px 14px;\n  cursor: pointer;\n  background-color: #e5e5e5;\n  background-image: linear-gradient(to bottom, #ffffff, #d3d3d3);\n}\n.button:active {\n  background-image: linear-gradient(to top, #ffffff, #d3d3d3);\n}\n.button:focus {\n  outline: none;\n  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.8);\n}\n.button_primary {\n  background-color: #86e99c;\n  background-image: linear-gradient(to bottom, #9dffb3, #70d487);\n}\n.button_primary:active {\n  background-image: linear-gradient(to top, #9dffb3, #70d487);\n}\n", ""]);
 
 	// exports
 

@@ -2,27 +2,47 @@
 
 body {
     font-family: 'PT Sans', sans-serif;
-    background: #E9F3EE;
+    background: #eaf5ee;
     margin: 20px 20px;
 }
 
 
 .link {
-    color: #235FBE;
-    -webkit-text-decoration-color: #BCD7E4;
-    text-decoration-color: #BCD7E4;
+    color: #0059bd;
+    -webkit-text-decoration-color: #bad6e4; //todo postcss
+    text-decoration-color: #bad6e4;
 }
 
 
 .button {
-    display: inline-block;
+    font-family: 'PT Sans', sans-serif;
     font-size: 14px;
-    color: #0B0B0B;
+    border: none;
+    color: #000000;
     box-shadow: 0px 1px 3px rgba(57, 57, 57, 0.5);
     border-radius: 4px;
-    padding: 5px 15px;
-    background-color: #8AE99F;
-    background: linear-gradient(to bottom, #9DF8B3, #75D68B);
+    padding: 5px 14px;
     cursor: pointer;
+    background-color: #e5e5e5;
+    background-image: linear-gradient(to bottom, #fff, #d3d3d3);
+
+    &:active {
+        background-image: linear-gradient(to top, #fff, #d3d3d3);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    &_primary {
+        background-color: #86e99c;
+        background-image: linear-gradient(to bottom, #9dffb3, #70d487);
+
+        &:active {
+            background-image: linear-gradient(to top, #9dffb3, #70d487);
+        }
+    }
+
 }
 
