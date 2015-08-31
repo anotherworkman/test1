@@ -1,5 +1,8 @@
+import 'es5-shim';
+import 'es5-shim/es5-sham';
+
 import React from 'react';
-import Router, {Route, DefaultRoute, RouteHandler} from 'react-router';
+import Router, {Route, DefaultRoute, RouteHandler} from 'react-router-ie8';
 
 import Nav from './Nav/Nav';
 import DirectoriesList from './DirectoriesList/DirectoriesList';

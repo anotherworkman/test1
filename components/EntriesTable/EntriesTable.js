@@ -47,11 +47,14 @@ export default class EntriesTable extends React.Component {
     }
 
     componentDidMount() {
-        // чтобы при фильтрации не приыгала ширина колонок
+        if (! window.getComputedStyle) {
+            return; //hello, ie8
+        }
+        // чтобы при фильтрации не прыгала ширина колонок
         setTimeout(() => {
             var columns = React.findDOMNode(this.refs.header).childNodes;
             for (var i = 0; i < columns.length; i++) {
-                var col = columns[i];
+                var col = columns[i].firstChild; // ширина ячеек в ie не правильная, поэтому берем wrapper
                 col.style.width = window.getComputedStyle(col).width;
             }
         }, 100); // без timeout layout еще не успевает просчитаться

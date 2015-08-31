@@ -1,9 +1,10 @@
 {
   "dependencies": {
+    "es5-shim": "^4.1.11",
     "moment": "^2.10.6",
     "react": "^0.13.3",
     "react-date-picker": "^3.1.2",
-    "react-router": "^0.13.3"
+    "react-router-ie8": "^0.13.4"
   },
   "devDependencies": {
     "webpack": "^1.8.9",

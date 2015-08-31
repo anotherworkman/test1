@@ -92,6 +92,7 @@ export class SelectBox extends React.Component {
     render() {
         return (
             <select
+                className="select-box"
                 value={this.props.value}
                 onChange={e => this.props.onChange(e.target.value)}
             >
