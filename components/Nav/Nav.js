@@ -70,17 +70,15 @@ export default class Nav extends React.Component {
     }
 
     componentDidMount() {
-        this.updateTitle();
+        this.updateDocumentTitle();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.title != this.props.title) {
-            this.updateTitle();
-        }
+    componentDidUpdate() {
+        this.updateDocumentTitle();
     }
 
-    updateTitle() {
-        document.title = this.props.title;
+    updateDocumentTitle() {
+        document.title = this.state.title;
     }
 
 }
