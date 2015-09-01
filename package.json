@@ -1,11 +1,17 @@
 {
+  "scripts": {
+    "start": "node ./node_modules/local-web-server/bin/ws.js",
+    "pack": "node ./node_modules/webpack/bin/webpack.js",
+    "pack-watch": "node ./node_modules/webpack/bin/webpack.js --watch",
+    "pack-prod": "node ./node_modules/webpack/bin/webpack.js --optimize-minimize"
+  },
   "dependencies": {
     "es5-shim": "^4.1.11",
     "moment": "^2.10.6",
     "react": "^0.13.3",
     "react-date-picker": "^3.1.2",
     "react-router-ie8": "^0.13.4",
-    "xhr": "nathan7/xhr"
+    "xhr-json": "^2.2.5"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
@@ -13,9 +19,9 @@
     "babel-loader": "^5.0.0",
     "css-loader": "^0.15.6",
     "file-loader": "^0.8.4",
-    "json-loader": "^0.5.2",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
+    "local-web-server": "^0.5.23",
     "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.8.9"

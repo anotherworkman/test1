@@ -3,7 +3,7 @@ import 'es5-shim/es5-sham';
 
 import React from 'react';
 import Router, {Route, DefaultRoute, RouteHandler} from 'react-router-ie8';
-import xhr from 'xhr';
+import xhrJson from 'xhr-json';
 
 import Nav from './Nav/Nav';
 import DirectoriesList from './DirectoriesList/DirectoriesList';
@@ -38,8 +38,8 @@ class App extends React.Component {
     }
 
     loadData(route) {
-        xhr({ url: this.getDataUrl(route) }).then(resp =>
-            this.setState({ data: JSON.parse(resp.body).response })
+        xhrJson({ url: this.getDataUrl(route) }).then(resp =>
+            this.setState({ data: resp.body.response })
         );
     }
 
