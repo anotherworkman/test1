@@ -4,12 +4,16 @@ import {className} from '../BemHelper';
 import "./EntriesTable.less";
 const bemBlock = 'entries-table';
 
+var highlightReplacement = '<span class="_">$&</span>'.replace('_', className(bemBlock, 'highlight'));
 
 export default class EntriesTable extends React.Component {
 
     static contextTypes = { router: PropTypes.any };
 
     render() {
+        var searchText = this.props.searchText;
+        var highlightRegExp = searchText ? new RegExp(searchText, 'gi') : null;
+
         return (
             <div className={className(bemBlock, { empty: !this.props.entries.length })}>
                 <table className={className(bemBlock, 'table')}>
@@ -28,6 +32,10 @@ export default class EntriesTable extends React.Component {
                             var entryId = entry[0];
                             var values = entry.slice(1);
                             var cells = values.map((value, index) => {
+                                if (highlightRegExp) {
+                                    value = value.replace(highlightRegExp, highlightReplacement);
+                                    value = <span dangerouslySetInnerHTML={{__html: value}}/>;
+                                }
                                 if (index == 0) {
                                     var href = this.context.router.makeHref('entry', {
                                         directoryId: this.props.directoryId,

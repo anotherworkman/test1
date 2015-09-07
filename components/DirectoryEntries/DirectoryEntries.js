@@ -44,6 +44,7 @@ export default class DirectoryEntries extends React.Component {
                             directoryId={directory.id}
                             fields={directory.fields}
                             entries={this.state.filteredEntries}
+                            searchText={this.state.searchText}
                         />
                     </div>
                     <div className={className(bemBlock, 'entries-filter-box')}>
@@ -52,6 +53,7 @@ export default class DirectoryEntries extends React.Component {
                             <div className="entries-filter__input-form">
                                 <SearchInput
                                     placeholder="Поиск"
+                                    autoFocus={true}
                                     value={this.state.searchText}
                                     onChange={this.handleFilterChange.bind(this)}
                                 />
@@ -77,8 +79,8 @@ export default class DirectoryEntries extends React.Component {
         searchText = searchText.toLowerCase();
         return (
             entries.filter(entry =>
-                entry.slice(1).some(val =>
-                    val && val.toLowerCase().split(' ').some(word => word.indexOf(searchText) == 0)))
+                entry.slice(1) // первый элемент, содержащий id, не учитываем
+                    .some(val => val.toLowerCase().indexOf(searchText) != -1))
         );
     }
 

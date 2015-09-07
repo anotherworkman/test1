@@ -24,6 +24,7 @@ export class SearchInput extends React.Component {
                 className="input input_searchable"
                 type="search"
                 placeholder={this.props.placeholder}
+                autoFocus={this.props.autoFocus}
                 value={this.props.value}
                 onChange={e => this.props.onChange(e.target.value)}
             />

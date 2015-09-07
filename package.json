@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "start": "node ./node_modules/local-web-server/bin/ws.js",
-    "pack": "node ./node_modules/webpack/bin/webpack.js",
-    "pack-watch": "node ./node_modules/webpack/bin/webpack.js --watch",
-    "pack-prod": "node ./node_modules/webpack/bin/webpack.js --optimize-minimize"
+    "start": "ws",
+    "pack": "webpack",
+    "pack-watch": "webpack --watch",
+    "pack-prod": "webpack --optimize-minimize"
   },
   "dependencies": {
     "es5-shim": "^4.1.11",
