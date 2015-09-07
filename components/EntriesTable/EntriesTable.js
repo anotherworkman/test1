@@ -11,8 +11,12 @@ export default class EntriesTable extends React.Component {
     static contextTypes = { router: PropTypes.any };
 
     render() {
-        var searchText = this.props.searchText;
-        var highlightRegExp = searchText ? new RegExp(searchText, 'gi') : null;
+        var highlightRegExp = null;
+
+        if (this.props.textToHighlight) {
+            var textToHighlightEscaped = this.props.textToHighlight.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
+            highlightRegExp = new RegExp(textToHighlightEscaped, 'gi');
+        }
 
         return (
             <div className={className(bemBlock, { empty: !this.props.entries.length })}>

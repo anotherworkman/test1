@@ -44,7 +44,7 @@ export default class DirectoryEntries extends React.Component {
                             directoryId={directory.id}
                             fields={directory.fields}
                             entries={this.state.filteredEntries}
-                            searchText={this.state.searchText}
+                            textToHighlight={this.state.searchText}
                         />
                     </div>
                     <div className={className(bemBlock, 'entries-filter-box')}>
